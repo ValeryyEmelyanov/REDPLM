@@ -1,113 +1,23 @@
 <!DOCTYPE html>
-<html lang="en">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Login</title>
-  <style>
-    /* Общие стили для всей страницы */
-    body {
-      font-family: Arial, sans-serif; /* Шрифт */
-      background-color: #1b1b1b; /* Цвет фона */
-      margin: 0;
-      padding: 0;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      height: 100vh; /* Чтобы контейнер с логином был по центру */
-    }
-    /* Стили для контейнера логина */
-    .login-container {
-      background-color: #282828; /* Цвет фона */
-      border-radius: 8px; /* Радиус скругления углов */
-      padding: 60px; /* Увеличение отступов */
-      box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.3); /* Тень */
-      width: 400px; /* Увеличение ширины */
-      position: relative; /* Позволяет позиционировать элементы внутри контейнера */
-    }
-    /* Стили для надписи "Redfab" */
-    .brand {
-      position: absolute; /* Позиционирование абсолютно относительно родительского элемента */
-      top: 20px; /* Отступ от верхней границы */
-      left: 20px; /* Отступ от левой границы */
-      color: #ff3d00; /* Цвет текста */
-      font-size: 24px; /* Размер текста */
-    }
-    /* Стили для белого фона у "fab" */
-    .white-background {
-      background-color: #ffffff; /* Белый фон */
-      padding: 0 4px; /* Добавление отступов */
-      border-radius: 4px; /* Радиус скругления углов */
-    }
-    /* Стили для заголовка */
-    .login-container h2 {
-      display: none; /* Скрытие заголовка */
-    }
-    /* Стили для формы логина */
-    .login-form {
-      display: flex;
-      flex-direction: column;
-    }
-    /* Стили для полей ввода */
-    .login-form input {
-      padding: 10px; /* Отступ внутри поля */
-      margin-bottom: 20px; /* Отступ снизу */
-      border: 1px solid #ff3d00; /* Граница */
-      border-radius: 4px; /* Радиус скругления углов */
-      color: #ffffff; /* Цвет текста */
-      background-color: #1b1b1b; /* Цвет фона */
-    }
-    /* Увеличение расстояния между полями логина/пароля и кнопкой логина */
-    .login-form input[type="submit"] {
-      margin-bottom: 30px; /* Увеличение отступа снизу для кнопки логина */
-    }
-    /* Стили для кнопки логина */
-    .login-form button {
-      padding: 12px; /* Отступ внутри кнопки */
-      background-color: #ff3d00; /* Цвет фона */
-      color: white; /* Цвет текста */
-      border: none; /* Без границы */
-      border-radius: 4px; /* Радиус скругления углов */
-      cursor: pointer; /* Курсор при наведении */
-    }
-    /* Стили для кнопки логина при наведении */
-    .login-form button:hover {
-      background-color: #d32f2f; /* Цвет фона при наведении */
-    }
-    /* Стили для дополнительного текста */
-    .additional-text {
-      position: absolute; /* Позиционирование абсолютно относительно родительского элемента */
-      top: 20px; /* Отступ от верхней границы */
-      left: calc(80px + 24px + 8px); /* Отступ от левой границы (20px - отступ Redfab, 24px - размер Redfab, 8px - отступ между Redfab и дополнительным текстом) */
-      color: #ffffff; /* Цвет текста */
-      font-size: 12px; /* Размер текста */
-      line-height: 12px; /* Межстрочный интервал */
-      text-align: left; /* Выравнивание по левому краю */
-    }
-    /* Стили для переноса на новую строку */
-    .line-break {
-      display: block;
-    }
-  </style>
+    <title>Please Log In</title>
 </head>
 <body>
-<div class="login-container">
-  <div class="brand">Red<span class="white-background">fab</span></div>
-
-  <!-- Добавлен текст "Цифровое производство в масштабе" справа от надписи "Redfab" -->
-  <div class="additional-text">
-    Цифровое<br class="line-break">производство в масштабе
-  </div>
-
-  <!-- Добавлены две пустые строки -->
-  <br>
-  <br>
-
-  <form class="login-form" action="/login" method="post">
-    <input type="text" name="username" placeholder="Username" required> <!-- Поле для ввода имени пользователя -->
-    <input type="password" name="password" placeholder="Password" required> <!-- Поле для ввода пароля -->
-    <button type="submit">Login</button> <!-- Кнопка для отправки формы -->
-  </form>
-</div>
+<h1>Please Log In</h1>
+<div th:if="${param.error}">
+    Invalid username and password.</div>
+<div th:if="${param.logout}">
+    You have been logged out.</div>
+<form th:action="@{/login}" method="post">
+    <div>
+        <input type="text" name="username" placeholder="Username"/>
+    </div>
+    <div>
+        <input type="password" name="password" placeholder="Password"/>
+    </div>
+    <input type="submit" value="Log in" />
+</form>
+<a href="/registration">егистрация</a>
 </body>
 </html>

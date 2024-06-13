@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Redfab: Отдел сборки</title>
+  <title>Redfab: Отладка стойки v.4-5 </title>
   <style>
     /* Общие стили для всей страницы */
     body {
@@ -15,7 +15,7 @@
       justify-content: center;
       align-items: center;
       flex-direction: column; /* Центрирование контента по вертикали */
-      height: 100vh; /* Чтобы контейнер с данными был по центру */
+      min-height: 100vh; /* Чтобы контейнер с данными был по центру */
     }
     /* Стили для оглавления */
     h1 {
@@ -89,10 +89,16 @@
       border: 1px solid #dddddd; /* Граница */
       border-radius: 8px; /* Радиус скругления углов */
     }
+    /* Стили для дополнительного изображения внизу */
+    .additional-image {
+      margin-top: 20px;
+      display: flex;
+      justify-content: center;
+    }
   </style>
 </head>
 <body>
-<h1>Redfab: Отдел сборки</h1>
+<h1>Redfab: Отладка стойки v.4-5</h1>
 <div class="data-container">
   <div class="image-container">
     <img src="https://3dtool.ru/upload/iblock/c8f/2g68lp4ujmwq7b5rj2wjhjo32jcwfi5h.jpg" alt="Пример создания взрыв схемы для технического сервиса станков ЧПУ">
@@ -102,7 +108,7 @@
       <thead>
       <tr>
         <th>№</th>
-        <th>Наименование</th>
+        <th>Узел регулировки</th>
         <th>Количество</th>
         <th>Чертеж</th>
         <th>Инструкция</th>
@@ -111,42 +117,40 @@
       <tbody>
       <tr>
         <td>1</td>
-        <td>Red.много Шкаф принтеров</td>
+        <td>Red.много Натяжка ремней</td>
         <td>10</td>
         <td><a href="#">Ссылка на чертеж</a></td>
         <td><a href="#">Ссылка на инструкцию</a></td>
       </tr>
       <tr>
         <td>2</td>
-        <td>Red.много Шкаф филмента</td>
+        <td>Red.много Концевик А</td>
         <td>5</td>
         <td><a href="#">Ссылка на чертеж</a></td>
         <td><a href="#">Ссылка на инструкцию</a></td>
       </tr>
       <tr>
         <td>3</td>
-        <td>Red.много Контейнер</td>
+        <td>Red.много Концевик Ж</td>
         <td>20</td>
         <td><a href="#">Ссылка на чертеж</a></td>
         <td><a href="#">Ссылка на инструкцию</a></td>
       </tr>
       <tr>
         <td>4</td>
-        <td>Red.много Перекидная пластина</td>
+        <td>Red.много Трехосевик</td>
         <td>15</td>
         <td><a href="#">Ссылка на чертеж</a></td>
         <td><a href="#">Ссылка на инструкцию</a></td>
       </tr>
       <tr>
         <td>5</td>
-        <td>Red.много Метизы</td>
+        <td>Red.много Чистик</td>
         <td>30</td>
         <td><a href="#">Ссылка на чертеж</a></td>
         <td><a href="#">Ссылка на инструкцию</a></td>
       </tr>
       </tbody>
-    </table>
-
     </table>
     <div class="button-container">
       <button class="green-button">Гневное письмо конструктору</button>
@@ -155,6 +159,12 @@
       <input type="text" placeholder="Поиск...">
     </div>
   </div>
+</div>
+<div class="additional-image">
+  <img src="http://epv-auto.ru/images/instrukcii/optibelt_Optikrik_2.jpg" alt="Набор для детской комнаты">
+</div>
+<div class="additional-image">
+  <img src="https://i1.wp.com/bouw.ru/userfiles/123_image009.png" alt="Набор для детской комнаты">
 </div>
 </body>
 </html>

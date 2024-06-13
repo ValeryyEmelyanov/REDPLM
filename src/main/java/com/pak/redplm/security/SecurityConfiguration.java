@@ -10,7 +10,7 @@ import org.springframework.security.web.SecurityFilterChain;
 @Configuration
 @AllArgsConstructor
 @EnableWebSecurity
-public class SecurityConfiguration {
+public class SecurityConfiguration{
     @Bean
     public SecurityFilterChain securityFilterChain (HttpSecurity http) throws Exception {
         http
@@ -24,8 +24,3 @@ public class SecurityConfiguration {
     }
 }
 
-//                .requestMatchers("/api/admin/**").hasRole("ADMIN")
-//                .requestMatchers("/api/users/**").hasAnyRole("ADMIN", "SUPERVISOR")
-//                .requestMatchers("/api/assembly-units/**").hasAnyRole("ADMIN", "WORKER", "SUPERVISOR")
-//                .requestMatchers("/api/details/**").hasAnyRole("ADMIN", "WORKER", "SUPERVISOR")
-//                .requestMatchers("/api/instructions/**").hasAnyRole("ADMIN", "WORKER", "SUPERVISOR")

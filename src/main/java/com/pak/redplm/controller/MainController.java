@@ -10,8 +10,27 @@ public class MainController {
     public String main(){
         return "main";
     }
+
+    @GetMapping("/user")
+    public String user(){
+
+        return "globalPAKForSupply";
+    }
+
+    @GetMapping("/admin")
+    public String admin(){
+
+        return "GlobalPAKForDebugging";
+    }
+
+    @GetMapping("/worker")
+    public String worker(){
+
+        return "globalPAKForAssembler";
+    }
+
     @GetMapping("/login")
     public String login(){
-        return "login";
+        return "custom_login";
     }
 }

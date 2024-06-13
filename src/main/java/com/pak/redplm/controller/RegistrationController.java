@@ -16,15 +16,15 @@ import org.springframework.web.bind.annotation.PostMapping;
 public class RegistrationController {
     UserService userService;
 
-    @GetMapping("/registration")
-    public String registration(Model model){
-        model.addAttribute("userEntity", new UserEntity());
-        return "registration";
-    }
-
-    @PostMapping("/registration")
-    public String registration(@ModelAttribute("userEntity") UserEntity userEntity, Model model){
-        userService.saveUser(userEntity);
-        return "redirect:/login";
-    }
+//    @GetMapping("/registration")
+//    public String registration(Model model){
+//        model.addAttribute("userEntity", new UserEntity());
+//        return "registration";
+//    }
+//
+//    @PostMapping("/registration")
+//    public String registration(@ModelAttribute("userEntity") UserEntity userEntity, Model model){
+//        userService.saveUser(userEntity);
+//        return "redirect:/login";
+//    }
 }

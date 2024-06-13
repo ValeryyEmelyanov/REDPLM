@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Redfab: Отдел сборки</title>
+  <title>Redfab: Снабжение стойки v.4-5 </title>
   <style>
     /* Общие стили для всей страницы */
     body {
@@ -15,7 +15,7 @@
       justify-content: center;
       align-items: center;
       flex-direction: column; /* Центрирование контента по вертикали */
-      height: 100vh; /* Чтобы контейнер с данными был по центру */
+      min-height: 100vh; /* Чтобы контейнер с данными был по центру */
     }
     /* Стили для оглавления */
     h1 {
@@ -62,10 +62,61 @@
       padding: 10px; /* Отступ внутри ячейки */
       border-bottom: 1px solid #dddddd; /* Граница снизу */
     }
+    /* Стили для зеленой кнопки */
+    .green-button {
+      background-color: green;
+      color: white;
+      padding: 20px;
+      border: none;
+      border-radius: 8px;
+      font-size: 24px; /* Увеличение размера текста */
+      cursor: pointer;
+      width: 100%;
+      max-width: 100%;
+      margin-top: 20px;
+    }
+    /* Стили для строки поиска */
+    .search-container {
+      margin-top: 20px;
+      display: flex;
+      justify-content: center;
+    }
+    .search-container input {
+      padding: 20px; /* Увеличение отступов */
+      font-size: 24px; /* Увеличение размера текста */
+      width: 100%;
+      max-width: 100%;
+      border: 1px solid #dddddd; /* Граница */
+      border-radius: 8px; /* Радиус скругления углов */
+    }
+    /* Стили для дополнительных кнопок */
+    .additional-buttons {
+      display: flex;
+      justify-content: space-around;
+      margin-top: 20px;
+    }
+    .additional-buttons .button {
+      background-color: #007bff;
+      color: white;
+      padding: 15px 20px;
+      border: none;
+      border-radius: 8px;
+      font-size: 20px; /* Увеличение размера текста */
+      cursor: pointer;
+    }
+    .additional-buttons .button:hover {
+      background-color: #0056b3;
+    }
+    /* Стили для дополнительного изображения внизу */
+    .additional-image {
+      margin-top: 20px;
+      display: flex;
+      justify-content: center;
+    }
   </style>
 </head>
 <body>
-<h1>Redfab: Отдел отладки и тестирования</h1>
+<h1>Redfab: Сборка стойки v.4-5</h1>
 <div class="data-container">
   <div class="image-container">
     <img src="https://3dtool.ru/upload/iblock/c8f/2g68lp4ujmwq7b5rj2wjhjo32jcwfi5h.jpg" alt="Пример создания взрыв схемы для технического сервиса станков ЧПУ">
@@ -75,45 +126,77 @@
       <thead>
       <tr>
         <th>№</th>
-        <th>Наименование </th>
-        <th>Количество</th> <!-- Добавлен столбец "Количество" -->
-        <th>Чертеж</th> <!-- Добавлен столбец "Чертеж" -->
+        <th>Наименование</th>
+        <th>Кол-во склад</th>
+        <th>Кол-во в сборке</th>
+        <th>Заказано</th>
+        <th>Чертеж</th>
+        <th>Инструкция</th>
       </tr>
       </thead>
       <tbody>
       <tr>
         <td>1</td>
         <td>Red.много Шкаф принтеров</td>
-        <td>10</td> <!-- Пример значения в столбце "Количество" -->
-        <td><a href="#">Ссылка на чертеж</a></td> <!-- Пример ссылки в столбце "Чертеж" -->
+        <td>10</td>
+        <td>2</td>
+        <td>8</td>
+        <td><a href="#">Ссылка на чертеж</a></td>
+        <td><a href="#">Ссылка на инструкцию</a></td>
       </tr>
       <tr>
         <td>2</td>
         <td>Red.много Шкаф филмента</td>
         <td>5</td>
+        <td>1</td>
+        <td>4</td>
         <td><a href="#">Ссылка на чертеж</a></td>
+        <td><a href="#">Ссылка на инструкцию</a></td>
       </tr>
       <tr>
         <td>3</td>
         <td>Red.много Контейнер</td>
         <td>20</td>
+        <td>5</td>
+        <td>15</td>
         <td><a href="#">Ссылка на чертеж</a></td>
+        <td><a href="#">Ссылка на инструкцию</a></td>
       </tr>
       <tr>
         <td>4</td>
         <td>Red.много Перекидная пластина</td>
         <td>15</td>
+        <td>3</td>
+        <td>12</td>
         <td><a href="#">Ссылка на чертеж</a></td>
+        <td><a href="#">Ссылка на инструкцию</a></td>
       </tr>
       <tr>
         <td>5</td>
         <td>Red.много Метизы</td>
         <td>30</td>
+        <td>10</td>
+        <td>20</td>
         <td><a href="#">Ссылка на чертеж</a></td>
+        <td><a href="#">Ссылка на инструкцию</a></td>
       </tr>
       </tbody>
     </table>
+    <div class="button-container">
+      <button class="green-button">Гневное письмо конструктору</button>
+    </div>
+    <div class="search-container">
+      <input type="text" placeholder="Поиск...">
+    </div>
+    <div class="additional-buttons">
+      <button class="button">Поступление деталей</button>
+      <button class="button">Списание</button>
+      <button class="button">Выгрузка наличия</button>
+    </div>
   </div>
+</div>
+<div class="additional-image">
+  <img src="https://100fabrik.ru/static/images/docs/nabor-dlia-detskoj-komnati-3.jpg" alt="Набор для детской комнаты">
 </div>
 </body>
 </html>
