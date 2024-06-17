@@ -1,4 +1,4 @@
 package com.pak.redplm.controller;
 
-public class TaskController {
+public class SWPartController {
 }

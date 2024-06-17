@@ -1,7 +1,8 @@
 package com.pak.redplm.service;
 
 import com.pak.redplm.entity.UserEntity;
-import com.pak.redplm.repository.UserRepository;
+import com.pak.redplm.repository.UserEntityRepository;
+import com.pak.redplm.repository.UserEntityRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -9,7 +10,7 @@ import org.springframework.stereotype.Service;
 @Service
 @AllArgsConstructor
 public class UserService {
-    UserRepository userRepository;
+    UserEntityRepository userRepository;
 
     private BCryptPasswordEncoder encoder(){
         return new BCryptPasswordEncoder();
