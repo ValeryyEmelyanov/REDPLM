@@ -1,6 +1,7 @@
 package com.pak.redplm.entity;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotNull;
 import lombok.Data;
 import java.util.List;
 
@@ -40,6 +41,7 @@ public class StorageContainer {
             inverseJoinColumns = @JoinColumn(name = "purchased_product_id"))
     private List<PurchasedProduct> purchasedProducts;
 
+    @NotNull(message = "Assigned user cannot be null")
     @ManyToOne
     @JoinColumn(name = "container_assigned")
     private UserEntity assignedTo;

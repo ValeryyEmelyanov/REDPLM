@@ -3,6 +3,8 @@ package com.pak.redplm.entity;
 import com.pak.redplm.entity.enumClasses.EPriorityLevel;
 import com.pak.redplm.entity.enumClasses.ETaskStatus;
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotEmpty;
+import jakarta.validation.constraints.NotNull;
 import lombok.Data;
 import java.util.List;
 
@@ -22,8 +24,10 @@ public class TaskForYoutrack {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @NotEmpty(message = "Title cannot be empty")
     private String title;
 
+    @NotEmpty(message = "Description cannot be empty")
     private String description;
 
     @Enumerated(EnumType.STRING)
@@ -76,8 +80,10 @@ public class TaskForYoutrack {
             inverseJoinColumns = @JoinColumn(name = "sw_part_id"))
     private List<SWPart> swParts;
 
+    @NotNull(message = "Created date cannot be null")
     private LocalDateTime createdDate;
 
+    @NotNull(message = "Deadline cannot be null")
     private LocalDateTime deadline;
 
 }

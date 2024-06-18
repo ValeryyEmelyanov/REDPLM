@@ -2,6 +2,10 @@ package com.pak.redplm.entity;
 
 import com.pak.redplm.entity.enumClasses.EAssemblyStatus;
 import jakarta.persistence.*;
+import jakarta.validation.constraints.Min;
+import jakarta.validation.constraints.NotEmpty;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Pattern;
 import lombok.Data;
 import java.time.Duration;
 import java.util.List;
@@ -18,10 +22,14 @@ public class SWAssembly {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @NotEmpty(message = "Name cannot be empty")
     private String name;
 
+    @NotNull(message = "Quantity in stock cannot be null")
+    @Min(value = 0, message = "Quantity in stock cannot be negative")
     private Integer quantityInStock;
 
+    @Pattern(regexp = "^RED\\..*", message = "Decimal number must start with 'RED.'")
     private String decimalNumber;
 
     //Входящие детали
@@ -59,6 +67,7 @@ public class SWAssembly {
     private SWDrawing swDrawing;
 
     //Расчетное время сборки
+    @NotEmpty(message = "time field must be filled in")
     private Duration estimatedTime;
 
     //Спецификация генерируется из входящих узлов или выкачивается с документации
