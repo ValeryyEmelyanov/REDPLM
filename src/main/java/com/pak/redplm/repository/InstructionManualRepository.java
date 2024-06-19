@@ -10,6 +10,4 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface InstructionManualRepository extends JpaRepository<InstructionManual, Long> {
 
-
-
 }
