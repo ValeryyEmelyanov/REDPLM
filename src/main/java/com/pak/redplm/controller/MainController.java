@@ -6,10 +6,19 @@ import org.springframework.web.bind.annotation.GetMapping;
 @Controller
 public class MainController {
 
-    @GetMapping("/")
-    public String main(){
-        return "main";
+    @GetMapping("/login")
+    public String login(){
+        return "custom_login";
     }
+
+    @GetMapping("/")
+    public String homePage(){
+        return "homePage";
+    }
+
+    /*  У одного пользователя, работающего *конструктором есть возможность зайти под ролью *сборщика
+    Прописывается индивидуально, связано с отпусками, больничными и перераспределением человекочасов
+    в случае горящих сроков */
 
     @GetMapping("/user")
     public String user(){
@@ -29,8 +38,5 @@ public class MainController {
         return "globalPAKForAssembler";
     }
 
-    @GetMapping("/login")
-    public String login(){
-        return "custom_login";
-    }
+
 }

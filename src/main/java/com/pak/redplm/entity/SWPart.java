@@ -10,12 +10,13 @@ import lombok.Data;
 
 import java.util.List;
 
+/* User Flow: единичная деталь, параметры должны совпадать с 1С
+ */
+
 @Entity
 @Data
 @Table(name = "Parts")
 public class SWPart {
-    /* User Flow: единичная деталь, параметры должны совпадать с 1С
-         */
 
     // Идентификатор сбокри
     @Id

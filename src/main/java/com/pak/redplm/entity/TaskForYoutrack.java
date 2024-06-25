@@ -10,15 +10,15 @@ import java.util.List;
 
 import java.time.LocalDateTime;
 
+    /* User Flow: Задача, устанавливаемая в YouTrack параметры задачи должны совпадать.
+    Задачи по сборке генерируются в backlog по отвественным отделам
+    Изменяемый статус задачи
+         */
+
 @Entity
 @Data
 @Table(name = "Tasks")
 public class TaskForYoutrack {
-    /* User Flow: Задача, устанавливаемая в YouTrack параметры задачи должны совпадать.
-    Задачи по сборке генерируются в backlog по отвественным отделам
-    Изменяемый статус задачи
-    Связан с PAK, SWAssembly, SWPart, StorageContainer, и UserEntity.
-         */
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

@@ -32,6 +32,9 @@ public class SWAssembly {
     @Pattern(regexp = "^RED\\..*", message = "Decimal number must start with 'RED.'")
     private String decimalNumber;
 
+    //  Уйти от связей MtM через промежуточную таблицу (аналогичную той, которая создается автоматически
+    //При необходимости фиксации дополнительных полей, к примеру, время заведения в БД
+
     //Входящие детали
     @ManyToMany
     @JoinTable(

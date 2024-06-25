@@ -5,6 +5,9 @@ import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.Pattern;
 import lombok.Data;
 
+/* User Flow: чертеж изделия соответствует единичной детали или сборке
+ */
+
 @Entity
 @Data
 @Table(name = "Drawing")

@@ -8,14 +8,15 @@ import jakarta.validation.constraints.NotEmpty;
 import lombok.Data;
 import java.util.List;
 
+/* User Flow: Роли пользователей соответствующие отделам
+ */
+
 @Entity
 @Data
 @Table(name="Users")
 
 public class UserEntity {
-    /* User Flow: Роли пользователей соответствующие отделам
 
-     */
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

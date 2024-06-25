@@ -13,7 +13,6 @@ import java.util.Optional;
 @Service
 public class SWAssemblyService {
 
-    @Autowired
     private SWAssemblyRepository swAssemblyRepository;
 
     // Получение списка всех сборок

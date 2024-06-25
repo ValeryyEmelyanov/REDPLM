@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Role Selection</title>
+    <style>
+        /* Общие стили для всей страницы */
+        body {
+            font-family: Arial, sans-serif; /* Шрифт */
+            background-color: #1b1b1b; /* Цвет фона */
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh; /* Чтобы контейнер был по центру */
+        }
+        /* Стили для контейнера выбора роли */
+        .role-container {
+            background-color: #282828; /* Цвет фона */
+            border-radius: 8px; /* Радиус скругления углов */
+            padding: 60px; /* Увеличение отступов */
+            box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.3); /* Тень */
+            width: 400px; /* Увеличение ширины */
+            position: relative; /* Позволяет позиционировать элементы внутри контейнера */
+            text-align: center;
+        }
+        /* Стили для надписи "Redfab" */
+        .brand {
+            position: absolute; /* Позиционирование абсолютно относительно родительского элемента */
+            top: 20px; /* Отступ от верхней границы */
+            left: 20px; /* Отступ от левой границы */
+            color: #ff3d00; /* Цвет текста */
+            font-size: 24px; /* Размер текста */
+        }
+        /* Стили для белого фона у "fab" */
+        .white-background {
+            background-color: #ffffff; /* Белый фон */
+            padding: 0 4px; /* Добавление отступов */
+            border-radius: 4px; /* Радиус скругления углов */
+        }
+        /* Стили для кнопок выбора роли */
+        .role-button {
+            padding: 12px; /* Отступ внутри кнопки */
+            background-color: #ff3d00; /* Цвет фона */
+            color: white; /* Цвет текста */
+            border: none; /* Без границы */
+            border-radius: 4px; /* Радиус скругления углов */
+            cursor: pointer; /* Курсор при наведении */
+            margin: 10px 0; /* Отступы сверху и снизу */
+            width: 100%; /* Ширина кнопки */
+        }
+        /* Стили для кнопок выбора роли при наведении */
+        .role-button:hover {
+            background-color: #d32f2f; /* Цвет фона при наведении */
+        }
+    </style>
+</head>
+<body>
+<div class="role-container">
+    <div class="brand">Red<span class="white-background">fab</span></div>
+
+    <h2>Выберите свою роль</h2>
+
+    <div id="role-buttons"></div>
+
+    <script>
+        // Пример данных ролей, замените на данные, которые будут передаваться из сервера
+        const roles = [
+            "ROLE_ADMIN",
+            "ROLE_USER",
+            "ROLE_MANAGER",
+            "ROLE_DEVELOPER"
+        ];
+
+        const roleButtonsContainer = document.getElementById('role-buttons');
+
+        roles.forEach(role => {
+            const button = document.createElement('button');
+            button.innerText = role;
+            button.classList.add('role-button');
+            button.onclick = () => {
+                window.location.href = `/startPage?role=${role}`;
+            };
+            roleButtonsContainer.appendChild(button);
+        });
+    </script>
+</div>
+</body>
+</html>
