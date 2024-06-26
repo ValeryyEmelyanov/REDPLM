@@ -2,7 +2,6 @@ package com.pak.redplm.service;
 
 import com.pak.redplm.entity.SWAssembly;
 import com.pak.redplm.repository.SWAssemblyRepository;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -15,25 +14,48 @@ public class SWAssemblyService {
 
     private SWAssemblyRepository swAssemblyRepository;
 
-    // Получение списка всех сборок
-    public List<SWAssembly> getAllSWAssemblies() {
-        return swAssemblyRepository.findAll();
-    }
 
-    // Получение сборки по ID
-    // Optional - для получения пустого объекта, а не null
-    public Optional<SWAssembly> getSWAssemblyById(Long id) {
-        return swAssemblyRepository.findById(id);
-    }
-
-    // Создание новой сборки
+    // Create
     public SWAssembly createSWAssembly(SWAssembly swAssembly) {
         return swAssemblyRepository.save(swAssembly);
     }
 
-    // Удаление сборки
-    public void deleteSWAssembly(Long id) {
+    // Read
+    public List<SWAssembly> getAllSWPart(){
+        return swAssemblyRepository.findAll();
+    }
+    public Optional<SWAssembly> getSWPartById(long id){
+        return swAssemblyRepository.findById(id);
+    }
+    public Optional<SWAssembly> getSWPartByDecimalName(String decimalName){
+        return swAssemblyRepository.findByDecimalNumber(decimalName);
+    }
+    public Optional<SWAssembly> getSWPartByName(String name){
+        return swAssemblyRepository.findByName(name);
+    }
+    public List<SWAssembly> getSWPartsByIdRange(Long startId, Long endId){
+        return swAssemblyRepository.findByIdBetween(startId,endId);
+    }
+
+    // Update
+    public SWAssembly updateSWPart (SWAssembly swAssembly){
+        return swAssemblyRepository.save(swAssembly);
+    }
+
+    // Delete
+    public void deleteSWPartById(Long id) {
         swAssemblyRepository.deleteById(id);
+    }
+    public void deleteSWPartByName(String name) {
+        swAssemblyRepository.deleteByName(name);
+    }
+    public void deleteSWPartByDecimalNumber(String decimalNumber) {
+        swAssemblyRepository.deleteByDecimalNumber(decimalNumber);
+    }
+    // Other
+    // Получение количества деталей
+    public long getCount(){
+        return swAssemblyRepository.count();
     }
 
 }
