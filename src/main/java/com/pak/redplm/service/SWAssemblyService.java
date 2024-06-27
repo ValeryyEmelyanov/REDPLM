@@ -12,7 +12,11 @@ import java.util.Optional;
 @Service
 public class SWAssemblyService {
 
-    private SWAssemblyRepository swAssemblyRepository;
+    private final SWAssemblyRepository swAssemblyRepository;
+
+    public SWAssemblyService(SWAssemblyRepository swAssemblyRepository) {
+        this.swAssemblyRepository = swAssemblyRepository;
+    }
 
 
     // Create
