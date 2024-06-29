@@ -1,6 +1,7 @@
 package com.pak.redplm.entity;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
 import lombok.Data;
 import java.util.List;
@@ -19,6 +20,9 @@ public class StorageContainer {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
+    @NotEmpty(message = "Name cannot be empty")
+    private String name;
 
     @ManyToMany
     @JoinTable(

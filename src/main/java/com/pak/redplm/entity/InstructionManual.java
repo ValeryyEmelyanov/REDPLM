@@ -5,11 +5,6 @@ import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.Pattern;
 import lombok.Data;
 
-    /* User Flow: Инструкция по сборке узла, децемальный номер соответсвует узлу, с припиской Д1
-    Инструкция является *предварительно PDF файлом или набором символов (возможно ссылкой на базу знаний YouTrack.
-    Выдается сборщику в интерфейс.
-    Инструкцией обладают только сборки.
-        */
 
 @Entity
 @Data

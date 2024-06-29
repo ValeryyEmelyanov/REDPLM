@@ -1,7 +1,6 @@
 package com.pak.redplm.repository;
 
 import com.pak.redplm.entity.PurchasedProduct;
-import com.pak.redplm.entity.SWPart;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.List;
@@ -15,13 +14,14 @@ public interface PurchasedProductRepository extends JpaRepository<PurchasedProdu
 
     //Find
     Optional<PurchasedProduct> findById (Long id);
-    Optional<PurchasedProduct> findByDecimalNumber (String decimalNumber);
+    Optional<PurchasedProduct> findByPurchaseCode (String purchaseCode);
     Optional<PurchasedProduct> findByName (String name);
     List<PurchasedProduct> findByIdBetween(Long startId, Long endId);
 
     //Delete
-    void deleteByDecimalNumber (String decimalNumber);
     void deleteById (Long id);
     void deleteByName (String name);
+    void deleteByPurchaseCode (String purchaseCode);
 
 }
+

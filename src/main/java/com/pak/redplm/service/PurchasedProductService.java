@@ -27,9 +27,7 @@ public class PurchasedProductService {
     public Optional<PurchasedProduct> getPurchasedProductById(long id){
         return purchasedProductRepository.findById(id);
     }
-    public Optional<PurchasedProduct> getPurchasedProductByDecimalName(String decimalName){
-        return purchasedProductRepository.findByDecimalNumber(decimalName);
-    }
+
     public Optional<PurchasedProduct> getPurchasedProductByName(String name){
         return purchasedProductRepository.findByName(name);
     }
@@ -48,9 +46,6 @@ public class PurchasedProductService {
     }
     public void deletePurchasedProduct(String name) {
         purchasedProductRepository.deleteByName(name);
-    }
-    public void deletePurchasedProductByDecimalNumber(String decimalNumber) {
-        purchasedProductRepository.deleteByDecimalNumber(decimalNumber);
     }
     // Other
     // Получение количества деталей

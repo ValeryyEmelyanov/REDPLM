@@ -1,7 +1,6 @@
 package com.pak.redplm.repository;
 
 import com.pak.redplm.entity.SWDrawing;
-import com.pak.redplm.entity.SWPart;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.List;
