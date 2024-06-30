@@ -26,12 +26,6 @@ public class StorageContainerService {
     public Optional<StorageContainer> getStorageContainerById(long id){
         return storageContainerRepository.findById(id);
     }
-//    public Optional<StorageContainer> getStorageContainerByName(String name){
-//        return storageContainerRepository.findByName(name);
-//    }
-//    public List<StorageContainer> getStorageContainersByIdRange(Long startId, Long endId){
-//        return storageContainerRepository.findByIdBetween(startId,endId);
-//    }
 
     // Update
     public StorageContainer updateInstructionManual (StorageContainer storageContainer){
@@ -42,12 +36,10 @@ public class StorageContainerService {
     public void deleteStorageContainerById(Long id) {
         storageContainerRepository.deleteById(id);
     }
-//    public void deleteStorageContainerByName(String name) {
-//        storageContainerRepository.deleteByName(name);
-//    }
-//    public void deleteStorageContainerByDecimalNumber(String decimalNumber) {
-//        storageContainerRepository.deleteByDecimalNumber(decimalNumber);
-//    }
+    public void deleteStorageContainerByName(String name) {
+        storageContainerRepository.deleteByName(name);
+    }
+
     // Other
     // Получение количества деталей
     public long getCount(){
