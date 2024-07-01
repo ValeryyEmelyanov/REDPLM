@@ -4,13 +4,74 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Система автоматизации склада - Главная</title>
-  <link rel="stylesheet" href="forTheFuture/styles.css">
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #1b1b1b;
+      margin: 0;
+      padding: 0;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+    }
+    .dashboard-container {
+      background-color: #282828;
+      border-radius: 8px;
+      padding: 40px;
+      box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.3);
+      width: 80%;
+      max-width: 1200px;
+      color: white;
+      text-align: center;
+      position: relative;
+    }
+    .brand {
+      position: absolute;
+      top: 20px;
+      left: 20px;
+      color: #ff3d00;
+      font-size: 24px;
+    }
+    .white-background {
+      background-color: #ffffff;
+      padding: 0 4px;
+      border-radius: 4px;
+    }
+    h1 {
+      color: #ff3d00;
+      margin-bottom: 40px;
+    }
+    .widget {
+      background-color: #1b1b1b;
+      padding: 20px;
+      border-radius: 8px;
+      box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.2);
+      margin-bottom: 20px;
+    }
+    .widget h2 {
+      color: #ff3d00;
+    }
+    .notifications ul {
+      list-style: none;
+      padding: 0;
+    }
+    .notifications li {
+      background-color: #ff3d00;
+      padding: 10px;
+      margin: 5px 0;
+      border-radius: 4px;
+    }
+    footer {
+      margin-top: 40px;
+      color: #ff3d00;
+    }
+  </style>
 </head>
 <body>
-<header>
+<div class="dashboard-container">
+  <div class="brand">Red<span class="white-background">fab</span></div>
   <h1>Система автоматизации склада</h1>
-</header>
-<main>
   <section class="dashboard">
     <div class="widget">
       <h2>Количество деталей на складе</h2>
@@ -20,7 +81,7 @@
       <h2>Активные задачи</h2>
       <p>32</p>
     </div>
-    <div class="notifications">
+    <div class="widget notifications">
       <h2>Уведомления</h2>
       <ul>
         <li>Низкий запас детали X</li>
@@ -28,9 +89,9 @@
       </ul>
     </div>
   </section>
-</main>
-<footer>
-  <p>&copy; 2024 Система автоматизации склада</p>
-</footer>
+  <footer>
+    <p>&copy; 2024 Система автоматизации склада</p>
+  </footer>
+</div>
 </body>
 </html>

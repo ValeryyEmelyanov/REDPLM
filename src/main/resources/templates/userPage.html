@@ -2,9 +2,169 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Достижения компании</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #1b1b1b;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            color: white;
+        }
+        .achievements-container {
+            background-color: #282828;
+            border-radius: 8px;
+            padding: 40px;
+            box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.3);
+            width: 80%;
+            max-width: 1200px;
+            position: relative;
+            text-align: center;
+        }
+        .brand {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            color: #ff3d00;
+            font-size: 24px;
+        }
+        .white-background {
+            background-color: #ffffff;
+            padding: 0 4px;
+            border-radius: 4px;
+        }
+        h1, h2 {
+            color: #ff3d00;
+        }
+        table {
+            width: 100%;
+            margin-top: 20px;
+            border-collapse: collapse;
+        }
+        table th, table td {
+            padding: 12px;
+            border: 1px solid #ffffff;
+            text-align: left;
+        }
+        .widget {
+            background-color: #1b1b1b;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.2);
+            margin-bottom: 20px;
+            text-align: left;
+        }
+        .widget h2 {
+            color: #ff3d00;
+        }
+        .statistics {
+            display: flex;
+            justify-content: space-between;
+            flex-wrap: wrap;
+        }
+        .statistics .widget {
+            flex: 1 1 45%;
+            margin: 10px;
+        }
+        footer {
+            margin-top: 40px;
+            color: #ff3d00;
+        }
+    </style>
 </head>
 <body>
-
+<div class="achievements-container">
+    <div class="brand">Red<span class="white-background">fab</span></div>
+    <h1>Достижения компании</h1>
+    <section class="overview">
+        <table>
+            <thead>
+            <tr>
+                <th>Номер ПАКа</th>
+                <th>Дата поставки</th>
+                <th>Место распространения</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr>
+                <td>12345</td>
+                <td>01.02.2024</td>
+                <td>Завод Север</td>
+            </tr>
+            <tr>
+                <td>12346</td>
+                <td>15.03.2024</td>
+                <td>Завод Восток</td>
+            </tr>
+            <tr>
+                <td>12347</td>
+                <td>28.04.2024</td>
+                <td>Завод Запад</td>
+            </tr>
+            <tr>
+                <td>12348</td>
+                <td>10.05.2024</td>
+                <td>Завод Юг</td>
+            </tr>
+            <tr>
+                <td>12349</td>
+                <td>21.06.2024</td>
+                <td>Завод Центр</td>
+            </tr>
+            <tr>
+                <td>12350</td>
+                <td>03.07.2024</td>
+                <td>Завод Приморье</td>
+            </tr>
+            <tr>
+                <td>12351</td>
+                <td>14.07.2024</td>
+                <td>Завод Урал</td>
+            </tr>
+            <tr>
+                <td>12352</td>
+                <td>25.07.2024</td>
+                <td>Завод Сибирь</td>
+            </tr>
+            <tr>
+                <td>12353</td>
+                <td>05.08.2024</td>
+                <td>Завод Кавказ</td>
+            </tr>
+            <tr>
+                <td>12354</td>
+                <td>16.08.2024</td>
+                <td>Завод Алтай</td>
+            </tr>
+            </tbody>
+        </table>
+    </section>
+    <section class="statistics">
+        <div class="widget">
+            <h2>Количество изготовленных деталей</h2>
+            <p>125678</p>
+        </div>
+        <div class="widget">
+            <h2>Активные задачи</h2>
+            <p>45</p>
+        </div>
+        <div class="widget">
+            <h2>Число работников</h2>
+            <p>320</p>
+        </div>
+        <div class="widget">
+            <h2>Собрано и поставлено стоек</h2>
+            <p>10</p>
+        </div>
+    </section>
+    <footer>
+        <p>&copy; 2024 Система автоматизации склада</p>
+    </footer>
+</div>
 </body>
 </html>

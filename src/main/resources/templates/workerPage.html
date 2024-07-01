@@ -2,9 +2,276 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Redfab: Снабжение стойки v.4-5</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #1b1b1b;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            color: white;
+        }
+
+        .achievements-container {
+            background-color: #282828;
+            border-radius: 8px;
+            padding: 40px;
+            box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.3);
+            width: 80%;
+            max-width: 1200px;
+            position: relative;
+            text-align: center;
+        }
+
+        .brand {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            color: #ff3d00;
+            font-size: 24px;
+        }
+
+        .white-background {
+            background-color: #ffffff;
+            padding: 0 4px;
+            border-radius: 4px;
+        }
+
+        h1, h2 {
+            color: #ff3d00;
+        }
+
+        table {
+            width: 100%;
+            margin-top: 20px;
+            border-collapse: collapse;
+        }
+
+        table th, table td {
+            padding: 12px;
+            border: 1px solid #090909;
+            text-align: left;
+        }
+
+        .widget {
+            background-color: #1b1b1b;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.2);
+            margin-bottom: 20px;
+            text-align: left;
+        }
+
+        .widget h2 {
+            color: #ff3d00;
+        }
+
+        .statistics {
+            display: flex;
+            justify-content: space-between;
+            flex-wrap: wrap;
+        }
+
+        .statistics .widget {
+            flex: 1 1 45%;
+            margin: 10px;
+        }
+
+        footer {
+            margin-top: 40px;
+            color: #ff3d00;
+        }
+
+        .image-container {
+            flex: 1;
+        }
+
+        img {
+            max-width: 100%;
+            height: auto;
+            display: block;
+            margin: 0 auto;
+        }
+
+        .table-container {
+            flex: 1;
+            overflow: auto;
+        }
+
+        th {
+            background-color: #090909;
+            padding: 10px;
+            text-align: left;
+            border-bottom: 1px solid #dddddd;
+        }
+
+        td {
+            padding: 10px;
+            border-bottom: 1px solid #dddddd;
+        }
+
+        a {
+            text-decoration: none;
+            color: #007bff;
+        }
+
+        .green-button {
+            background-color: green;
+            color: white;
+            padding: 15px 20px;
+            border: none;
+            border-radius: 8px;
+            font-size: 20px;
+            cursor: pointer;
+            width: 100%;
+            max-width: 100%;
+            margin-top: 20px;
+        }
+
+        .search-container {
+            margin-top: 20px;
+            display: flex;
+            justify-content: center;
+        }
+
+        .search-container input {
+            padding: 15px 20px;
+            font-size: 20px;
+            width: 100%;
+            max-width: 100%;
+            border: 1px solid #dddddd;
+            border-radius: 8px;
+        }
+
+        .additional-buttons {
+            display: flex;
+            justify-content: space-around;
+            margin-top: 20px;
+        }
+
+        .additional-buttons .button {
+            background-color: #007bff;
+            color: white;
+            padding: 15px 20px;
+            border: none;
+            border-radius: 8px;
+            font-size: 20px;
+            cursor: pointer;
+        }
+
+        .additional-buttons .button:hover {
+            background-color: #0056b3;
+        }
+
+        .additional-image {
+            margin-top: 20px;
+            display: flex;
+            justify-content: center;
+            max-width: 100%;
+            overflow: hidden;
+        }
+
+        .additional-image img {
+            max-width: 100%;
+            height: auto;
+            display: block;
+            margin: 0 auto;
+        }
+    </style>
 </head>
 <body>
-
+<div class="achievements-container">
+    <div class="brand">Red<span class="white-background">fab</span></div>
+    <h1>Снабжение стойки v.4-5</h1>
+    <div class="data-container">
+        <div class="image-container">
+            <img src="https://3dtool.ru/upload/iblock/c8f/2g68lp4ujmwq7b5rj2wjhjo32jcwfi5h.jpg" alt="Пример создания взрыв схемы для технического сервиса станков ЧПУ">
+        </div>
+        <div class="table-container">
+            <table>
+                <thead>
+                <tr>
+                    <th>№</th>
+                    <th>Наименование</th>
+                    <th>Кол-во на складе</th>
+                    <th>Кол-во в сборке</th>
+                    <th>Заказано</th>
+                    <th>Чертеж</th>
+                    <th>Инструкция</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr>
+                    <td>1</td>
+                    <td>Red.много Шкаф принтеров</td>
+                    <td>10</td>
+                    <td>2</td>
+                    <td>8</td>
+                    <td><a href="#">Ссылка на чертеж</a></td>
+                    <td><a href="#">Ссылка на инструкцию</a></td>
+                </tr>
+                <tr>
+                    <td>2</td>
+                    <td>Red.много Шкаф филмента</td>
+                    <td>5</td>
+                    <td>1</td>
+                    <td>4</td>
+                    <td><a href="#">Ссылка на чертеж</a></td>
+                    <td><a href="#">Ссылка на инструкцию</a></td>
+                </tr>
+                <tr>
+                    <td>3</td>
+                    <td>Red.много Контейнер</td>
+                    <td>20</td>
+                    <td>5</td>
+                    <td>15</td>
+                    <td><a href="#">Ссылка на чертеж</a></td>
+                    <td><a href="#">Ссылка на инструкцию</a></td>
+                </tr>
+                <tr>
+                    <td>4</td>
+                    <td>Red.много Перекидная пластина</td>
+                    <td>15</td>
+                    <td>3</td>
+                    <td>12</td>
+                    <td><a href="#">Ссылка на чертеж</a></td>
+                    <td><a href="#">Ссылка на инструкцию</a></td>
+                </tr>
+                <tr>
+                    <td>5</td>
+                    <td>Red.много Метизы</td>
+                    <td>30</td>
+                    <td>10</td>
+                    <td>20</td>
+                    <td><a href="#">Ссылка на чертеж</a></td>
+                    <td><a href="#">Ссылка на инструкцию</a></td>
+                </tr>
+                </tbody>
+            </table>
+            <div class="button-container">
+                <button class="green-button">Гневное письмо конструктору</button>
+            </div>
+            <div class="search-container">
+                <input type="text" placeholder="Поиск...">
+            </div>
+            <div class="additional-buttons">
+                <button class="button">Поступление деталей</button>
+                <button class="button">Списание</button>
+                <button class="button">Выгрузка наличия</button>
+            </div>
+        </div>
+    </div>
+    <div class="additional-image">
+        <img src="https://100fabrik.ru/static/images/docs/nabor-dlia-detskoj-komnati-3.jpg" alt="Набор для детской комнаты">
+    </div>
+    <footer>
+        <p>&copy; 2024 Система автоматизации склада</p>
+    </footer>
+</div>
 </body>
 </html>
