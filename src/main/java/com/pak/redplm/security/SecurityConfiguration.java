@@ -10,17 +10,17 @@ import org.springframework.security.web.SecurityFilterChain;
 @Configuration
 @AllArgsConstructor
 @EnableWebSecurity
-public class SecurityConfiguration{
+public class SecurityConfiguration {
     @Bean
-    public SecurityFilterChain securityFilterChain (HttpSecurity http) throws Exception {
+    public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
+                .csrf().disable() // Отключаем CSRF для простоты
                 .authorizeHttpRequests((request) -> request
-                .requestMatchers("/registration").permitAll()
-                .anyRequest().authenticated())
-                .formLogin((form)->form.loginPage("/login").permitAll())
-                .logout((logout)->logout.permitAll());
+                        .requestMatchers("/registration", "/scanPage", "/scan").permitAll()
+                        .anyRequest().authenticated())
+                .formLogin((form) -> form.loginPage("/login").permitAll())
+                .logout((logout) -> logout.permitAll());
 
         return http.build();
     }
 }
-
