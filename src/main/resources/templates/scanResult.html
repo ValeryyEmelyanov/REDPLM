@@ -1,15 +1,15 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="en">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Результаты сканирования</title>
+  <title>Scan Result</title>
 </head>
 <body>
-<h1>Результаты сканирования:</h1>
+<h1>Scan Result</h1>
 <ul>
-  <li th:each="file : ${solidWorksFiles}" th:text="${file}"></li>
+  <th:block th:each="file : ${solidWorksFiles}">
+    <li th:text="${file.name}"></li>
+  </th:block>
 </ul>
-<a href="/scanPage">Назад</a>
 </body>
 </html>

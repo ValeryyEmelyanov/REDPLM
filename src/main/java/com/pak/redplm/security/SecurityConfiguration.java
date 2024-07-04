@@ -11,15 +11,18 @@ import org.springframework.security.web.SecurityFilterChain;
 @AllArgsConstructor
 @EnableWebSecurity
 public class SecurityConfiguration {
+
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
-                .csrf().disable() // Отключаем CSRF для простоты
-                .authorizeHttpRequests((request) -> request
+                .authorizeHttpRequests((requests) -> requests
                         .requestMatchers("/registration", "/scanPage", "/scan").permitAll()
                         .anyRequest().authenticated())
-                .formLogin((form) -> form.loginPage("/login").permitAll())
-                .logout((logout) -> logout.permitAll());
+                .formLogin((form) -> form
+                        .loginPage("/login")
+                        .permitAll())
+                .logout((logout) -> logout.permitAll())
+                .csrf().disable(); // Отключение CSRF защиты
 
         return http.build();
     }
