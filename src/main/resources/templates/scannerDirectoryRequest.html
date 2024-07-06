@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Scan Directory</title>
+  <style>
+    /* Общие стили для всей страницы */
+    body {
+      font-family: Arial, sans-serif; /* Шрифт */
+      background-color: #1b1b1b; /* Цвет фона */
+      margin: 0;
+      padding: 0;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh; /* Чтобы контейнер был по центру */
+    }
+    /* Стили для контейнера формы */
+    .form-container {
+      background-color: #282828; /* Цвет фона */
+      border-radius: 8px; /* Радиус скругления углов */
+      padding: 40px; /* Отступы */
+      box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.3); /* Тень */
+      width: 400px; /* Ширина */
+      position: relative; /* Позволяет позиционировать элементы внутри контейнера */
+    }
+    /* Стили для заголовка */
+    .form-container h1 {
+      color: #ff3d00; /* Цвет заголовка */
+      font-size: 24px; /* Размер заголовка */
+      margin-bottom: 20px; /* Отступ снизу */
+    }
+    /* Стили для меток и полей ввода */
+    .form-container label,
+    .form-container input {
+      display: block; /* Блочное отображение */
+      width: 100%; /* Полная ширина */
+      margin-bottom: 15px; /* Отступ снизу */
+    }
+    .form-container input {
+      padding: 10px; /* Отступ внутри поля */
+      border: 1px solid #ff3d00; /* Граница */
+      border-radius: 4px; /* Радиус скругления углов */
+      color: #ffffff; /* Цвет текста */
+      background-color: #1b1b1b; /* Цвет фона */
+    }
+    /* Стили для кнопки отправки */
+    .form-container button {
+      padding: 12px; /* Отступ внутри кнопки */
+      background-color: #ff3d00; /* Цвет фона */
+      color: white; /* Цвет текста */
+      border: none; /* Без границы */
+      border-radius: 4px; /* Радиус скругления углов */
+      cursor: pointer; /* Курсор при наведении */
+      width: 100%; /* Полная ширина */
+      font-size: 16px; /* Размер текста */
+    }
+    /* Стили для кнопки при наведении */
+    .form-container button:hover {
+      background-color: #d32f2f; /* Цвет фона при наведении */
+    }
+  </style>
+</head>
+<body>
+<div class="form-container">
+  <h1>Scan Directory</h1>
+  <form action="/scan" method="post">
+    <label for="directory">Directory Path:</label>
+    <input type="text" id="directory" name="directory" required>
+    <button type="submit">Scan</button>
+  </form>
+</div>
+</body>
+</html>
