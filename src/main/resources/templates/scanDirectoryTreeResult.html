@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Scan Directory Tree</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #1b1b1b;
+      color: white;
+      margin: 0;
+      padding: 20px;
+    }
+    .tree {
+      margin: 0;
+      padding: 0;
+      list-style-type: none;
+    }
+    .tree ul {
+      list-style-type: none;
+      margin-left: 20px;
+      padding-left: 20px;
+      border-left: 1px solid #555;
+    }
+    .tree li {
+      margin: 0;
+      padding: 5px 0;
+      position: relative;
+    }
+    .tree li::before {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: -20px;
+      border-top: 1px solid #555;
+      width: 20px;
+      height: 10px;
+    }
+    .tree li:last-child::before {
+      border-left: 1px solid #555;
+      border-bottom: none;
+      height: auto;
+    }
+    .tree span {
+      cursor: pointer;
+    }
+    .tree span:hover {
+      text-decoration: underline;
+    }
+  </style>
+</head>
+<body>
+<h1>Scan Directory Tree</h1>
+<div th:if="${error}">
+  <p th:text="${error}" style="color: red;"></p>
+</div>
+<div th:unless="${error}">
+  <ul class="tree" th:utext="${treeHtml}"></ul>
+</div>
+</body>
+</html>

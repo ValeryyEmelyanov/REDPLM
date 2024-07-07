@@ -45,7 +45,7 @@
       color: #ffffff; /* Цвет текста */
       background-color: #1b1b1b; /* Цвет фона */
     }
-    /* Стили для кнопки отправки */
+    /* Стили для кнопок отправки */
     .form-container button {
       padding: 12px; /* Отступ внутри кнопки */
       background-color: #ff3d00; /* Цвет фона */
@@ -55,21 +55,36 @@
       cursor: pointer; /* Курсор при наведении */
       width: 100%; /* Полная ширина */
       font-size: 16px; /* Размер текста */
+      margin-bottom: 10px; /* Отступ снизу */
     }
-    /* Стили для кнопки при наведении */
     .form-container button:hover {
       background-color: #d32f2f; /* Цвет фона при наведении */
+    }
+    .button-container {
+      display: flex;
+      flex-direction: column;
     }
   </style>
 </head>
 <body>
 <div class="form-container">
   <h1>Scan Directory</h1>
-  <form action="/scan" method="post">
+  <form id="scanForm">
     <label for="directory">Directory Path:</label>
     <input type="text" id="directory" name="directory" required>
-    <button type="submit">Scan</button>
+    <div class="button-container">
+      <button type="button" onclick="submitForm('/scan')">Scan as List</button>
+      <button type="button" onclick="submitForm('/scanTree')">Scan as Tree</button>
+    </div>
   </form>
 </div>
+<script>
+  function submitForm(action) {
+    const form = document.getElementById('scanForm');
+    form.action = action;
+    form.method = 'post';
+    form.submit();
+  }
+</script>
 </body>
 </html>

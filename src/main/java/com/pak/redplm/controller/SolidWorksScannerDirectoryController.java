@@ -31,24 +31,34 @@ public class SolidWorksScannerDirectoryController {
         return "scanDirectoryResult";
     }
 
+    @PostMapping("/scanTree")
+    public String scanDirectoryTree(@RequestParam("directory") String directoryPath, Model model) {
+        File directory = new File(directoryPath);
+        StringBuilder treeHtml = new StringBuilder();
+        if (directory.exists() && directory.isDirectory()) {
+            buildTreeHtml(directory, treeHtml, 0);
+        } else {
+            model.addAttribute("error", "The provided directory does not exist or is not a directory: " + directoryPath);
+            return "error";
+        }
+
+        model.addAttribute("treeHtml", treeHtml.toString());
+        return "scanDirectoryTreeResult";
+    }
+
     private void scanDirectory(File directory, List<HierarchicalFile> solidWorksFiles, int level) {
         if (directory.isDirectory()) {
-            // Создаем элемент для текущей директории с учетом уровня вложенности
-            String indentedDirectoryName = " ".repeat(level * 3) + directory.getName();
-            solidWorksFiles.add(new HierarchicalFile(indentedDirectoryName, level, true));
+            solidWorksFiles.add(new HierarchicalFile(directory.getName(), level, true));
 
-            // Сканируем файлы и поддиректории внутри текущей директории
             File[] directoryFiles = directory.listFiles();
             if (directoryFiles != null) {
                 for (File file : directoryFiles) {
                     if (file.isDirectory()) {
-                        // Рекурсивно сканируем поддиректории с увеличением уровня вложенности
                         scanDirectory(file, solidWorksFiles, level + 1);
                     } else {
-                        // Добавляем только файлы SolidWorks с учетом уровня вложенности
-                        if (file.getName().endsWith(".SLDPRT") || file.getName().endsWith(".sldasm") || file.getName().endsWith(".slddrw")) {
-                            String indentedFileName = " ".repeat(level * 3 + 3) + file.getName().replaceFirst("[.][^.]+$", "").replaceAll("^\\.+", "");
-                            solidWorksFiles.add(new HierarchicalFile(indentedFileName, level + 1, false));
+                        if (file.getName().endsWith(".SLDPRT") || file.getName().endsWith(".SLDASM") || file.getName().endsWith(".SLDDRW")) {
+                            String fileNameWithoutExtension = file.getName().replaceFirst("[.][^.]+$", "").replaceAll("^\\.+", "");
+                            solidWorksFiles.add(new HierarchicalFile(fileNameWithoutExtension, level + 1, false));
                         }
                     }
                 }
@@ -56,7 +66,28 @@ public class SolidWorksScannerDirectoryController {
         }
     }
 
-    // Вспомогательный класс для хранения имени файла/директории и уровня вложенности
+    private void buildTreeHtml(File directory, StringBuilder treeHtml, int level) {
+        if (directory.isDirectory()) {
+            treeHtml.append("<li><span>").append(directory.getName()).append("</span>");
+            File[] directoryFiles = directory.listFiles();
+            if (directoryFiles != null) {
+                treeHtml.append("<ul>");
+                for (File file : directoryFiles) {
+                    if (file.isDirectory()) {
+                        buildTreeHtml(file, treeHtml, level + 1);
+                    } else {
+                        if (file.getName().endsWith(".SLDPRT") || file.getName().endsWith(".SLDASM") || file.getName().endsWith(".SLDDRW")) {
+                            String fileNameWithoutExtension = file.getName().replaceFirst("[.][^.]+$", "").replaceAll("^\\.+", "");
+                            treeHtml.append("<li><span>").append(fileNameWithoutExtension).append("</span></li>");
+                        }
+                    }
+                }
+                treeHtml.append("</ul>");
+            }
+            treeHtml.append("</li>");
+        }
+    }
+
     public static class HierarchicalFile {
         private final String name;
         private final int level;
