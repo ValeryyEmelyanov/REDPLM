@@ -21,6 +21,9 @@ public interface SWPartRepository extends JpaRepository<SWPart, Long> {
     void deleteById (Long id);
     void deleteByName (String name);
 
+    // Check existence by name
+    boolean existsByName(String name);
+
 
     // Деталь должна возвращать сборки в которые она входит
 
