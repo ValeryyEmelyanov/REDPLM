@@ -5,45 +5,175 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Scan Results</title>
   <style>
-    /* Общие стили для всей страницы */
     body {
-      font-family: Arial, sans-serif; /* Шрифт */
-      background-color: #1b1b1b; /* Цвет фона */
+      font-family: Arial, sans-serif;
+      background-color: #1b1b1b;
+      color: #ffffff;
       margin: 0;
-      padding: 0;
+      padding: 20px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+    .results-container {
+      background-color: #282828;
+      border-radius: 8px;
+      padding: 20px;
+      box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.3);
+      width: 800px;
+      max-height: 80vh;
+      overflow: auto;
+      margin-bottom: 20px;
+    }
+    .results-container h1 {
+      color: #ff3d00;
+      font-size: 24px;
+      margin-bottom: 20px;
+      text-align: center;
+    }
+    .file-entry {
+      display: flex;
+      justify-content: flex-start;
+      align-items: center;
+      margin-bottom: 5px;
+      transition: background-color 0.3s ease;
+    }
+    .file-entry:hover {
+      background-color: #333;
+    }
+    .file-entry input {
+      background-color: #1b1b1b;
+      color: #ffffff;
+      border: 1px solid #555;
+      border-radius: 4px;
+      padding: 5px;
+      flex-grow: 1;
+      margin-left: 10px;
+      transition: background-color 0.3s ease, border 0.3s ease;
+    }
+    .file-entry input:focus {
+      background-color: #333;
+      border-color: #ff3d00;
+    }
+    .buttons-container {
       display: flex;
       justify-content: center;
+      width: 100%;
+      margin-bottom: 20px;
+    }
+    .buttons-container button {
+      background-color: #4CAF50;
+      color: white;
+      padding: 10px 20px;
+      border: none;
+      cursor: pointer;
+      margin-right: 10px;
+      transition: background-color 0.3s ease;
+    }
+    .buttons-container button:hover {
+      background-color: #45a049;
+    }
+    .save-button {
+      background-color: #ff3d00;
+    }
+    .save-button:hover {
+      background-color: #d32f2f;
+    }
+    .entry-buttons {
+      display: flex;
       align-items: center;
-      min-height: 100vh; /* Минимальная высота для отображения содержимого */
-      color: #ffffff; /* Цвет текста */
     }
-    /* Стили для контейнера результатов */
-    .results-container {
-      background-color: #282828; /* Цвет фона */
-      border-radius: 8px; /* Радиус скругления углов */
-      padding: 20px; /* Отступы */
-      box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.3); /* Тень */
-      width: 800px; /* Увеличенная ширина */
-      max-height: 80vh; /* Ограничение максимальной высоты */
-      overflow: auto; /* Прокрутка при переполнении */
+    .arrow, .move, .add-button, .delete-button {
+      cursor: pointer;
+      margin: 0 5px;
+      font-size: 20px;
+      transition: color 0.3s ease;
     }
-    /* Стили для заголовка */
-    .results-container h1 {
-      color: #ff3d00; /* Цвет заголовка */
-      font-size: 24px; /* Размер заголовка */
-      margin-bottom: 20px; /* Отступ снизу */
+    .arrow.disabled, .move.disabled {
+      color: #555;
+      cursor: not-allowed;
     }
-    /* Стили для элементов файла */
-    .file-entry {
-      white-space: pre; /* Сохраняем пробелы и табуляции */
-      margin-bottom: 5px; /* Отступ снизу */
+    .arrow:hover:not(.disabled), .move:hover:not(.disabled), .add-button:hover, .delete-button:hover {
+      color: #ff3d00;
+    }
+    .delete-button {
+      background-color: #ff3d00;
+      color: white;
+      border: none;
+      padding: 5px 10px;
+      border-radius: 4px;
+    }
+    .delete-button:hover {
+      background-color: #d32f2f;
     }
   </style>
 </head>
 <body>
+<div class="buttons-container">
+  <form action="/saveToDatabase" method="post" style="margin: 0;">
+    <button type="submit" class="save-button">Выгрузить</button>
+  </form>
+</div>
 <div class="results-container">
   <h1>Scan Results</h1>
-  <div th:each="file : ${solidWorksFiles}" th:text="${file.name}" th:style="'margin-left: ' + (${file.level} * 20) + 'px'" class="file-entry"></div>
+  <div id="fileList">
+    <div th:each="file : ${solidWorksFiles}" class="file-entry">
+      <div class="entry-buttons">
+        <span class="move up-move" onclick="moveEntry(this, -1)">&#8593;</span>
+        <span class="move down-move" onclick="moveEntry(this, 1)">&#8595;</span>
+        <button type="button" class="add-button" onclick="addNewEntryAbove(this)">Добавить</button>
+        <span class="arrow left-arrow" th:classappend="${file.level == 0} ? 'disabled'" onclick="changeLevel(this, -1)">&#8592;</span>
+        <span class="arrow right-arrow" onclick="changeLevel(this, 1)">&#8594;</span>
+        <button type="button" class="delete-button" onclick="deleteEntry(this)">Удалить</button>
+      </div>
+      <input type="text" th:value="${file.name}" th:style="'margin-left: ' + (${file.level} * 20) + 'px'">
+    </div>
+  </div>
 </div>
+<script>
+  function changeLevel(element, direction) {
+    const entry = element.closest('.file-entry');
+    const input = entry.querySelector('input');
+    let marginLeft = parseInt(input.style.marginLeft || '0', 10);
+    if (direction === -1 && marginLeft > 0) {
+      marginLeft -= 20;
+    } else if (direction === 1) {
+      marginLeft += 20;
+    }
+    input.style.marginLeft = marginLeft + 'px';
+  }
+
+  function addNewEntryAbove(element) {
+    const entry = element.closest('.file-entry');
+    const newEntry = document.createElement('div');
+    newEntry.className = 'file-entry';
+    newEntry.innerHTML = `
+        <div class="entry-buttons">
+          <span class="move up-move" onclick="moveEntry(this, -1)">&#8593;</span>
+          <span class="move down-move" onclick="moveEntry(this, 1)">&#8595;</span>
+          <button type="button" class="add-button" onclick="addNewEntryAbove(this)">Добавить</button>
+          <span class="arrow left-arrow disabled" onclick="changeLevel(this, -1)">&#8592;</span>
+          <span class="arrow right-arrow" onclick="changeLevel(this, 1)">&#8594;</span>
+          <button type="button" class="delete-button" onclick="deleteEntry(this)">Удалить</button>
+        </div>
+        <input type="text" value="New File" style="margin-left: 0px">
+      `;
+    entry.parentNode.insertBefore(newEntry, entry);
+  }
+
+  function deleteEntry(element) {
+    const entry = element.closest('.file-entry');
+    entry.remove();
+  }
+
+  function moveEntry(element, direction) {
+    const entry = element.closest('.file-entry');
+    if (direction === -1 && entry.previousElementSibling) {
+      entry.parentNode.insertBefore(entry, entry.previousElementSibling);
+    } else if (direction === 1 && entry.nextElementSibling) {
+      entry.parentNode.insertBefore(entry.nextElementSibling, entry);
+    }
+  }
+</script>
 </body>
 </html>

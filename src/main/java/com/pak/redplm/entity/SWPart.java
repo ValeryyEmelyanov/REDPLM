@@ -23,6 +23,8 @@ public class SWPart {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    private Integer level;
+
     @NotNull(message = "Quantity in stock cannot be null")
     @Min(value = 0, message = "Quantity in stock cannot be negative")
     private Integer quantityInStock;
@@ -46,4 +48,8 @@ public class SWPart {
     //Статус сборки
     @Enumerated(EnumType.STRING)
     private EProductionMethod status;
+
+    public void setLevel(int fileLevel) {
+        this.level=level;
+    }
 }

@@ -43,4 +43,17 @@ public class SolidWorksScannerDirectoryController {
             return "error";
         }
     }
+
+    @PostMapping("/saveToDatabase")
+    public String saveToDatabase(@RequestParam List<String> fileNames, @RequestParam List<Integer> fileLevels, Model model) {
+        // Логика сохранения данных в базу данных
+        try {
+            solidWorksFileService.saveFilesToDatabase(fileNames, fileLevels);
+            model.addAttribute("parts", fileNames);
+            return "saveResult";
+        } catch (Exception e) {
+            model.addAttribute("error", e.getMessage());
+            return "error";
+        }
+    }
 }

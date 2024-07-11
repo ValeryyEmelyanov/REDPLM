@@ -48,6 +48,17 @@
     .tree span:hover {
       text-decoration: underline;
     }
+    button {
+      background-color: #4CAF50;
+      color: white;
+      padding: 10px 20px;
+      margin: 20px 0;
+      border: none;
+      cursor: pointer;
+    }
+    button:hover {
+      background-color: #45a049;
+    }
   </style>
 </head>
 <body>
@@ -57,6 +68,9 @@
 </div>
 <div th:unless="${error}">
   <ul class="tree" th:utext="${treeHtml}"></ul>
+  <form action="#" method="post">
+    <button type="submit" formaction="/saveToDatabase" formmethod="post">Сохранить в базу данных</button>
+  </form>
 </div>
 </body>
 </html>

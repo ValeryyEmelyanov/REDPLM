@@ -25,6 +25,8 @@ public class SWAssembly {
     @NotEmpty(message = "Name cannot be empty")
     private String name;
 
+    private Integer level;
+
     @NotNull(message = "Quantity in stock cannot be null")
     @Min(value = 0, message = "Quantity in stock cannot be negative")
     private Integer quantityInStock;
@@ -78,4 +80,8 @@ public class SWAssembly {
 
     @Enumerated(EnumType.STRING)
     private EAssemblyStatus status;
+
+    public void setLevel(int fileLevel) {
+        this.level = level;
+    }
 }

@@ -1,21 +1,21 @@
 package com.pak.redplm.service;
 
+import com.pak.redplm.entity.SWAssembly;
 import com.pak.redplm.entity.SWPart;
+import com.pak.redplm.repository.SWAssemblyRepository;
 import com.pak.redplm.repository.SWPartRepository;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.Data;
 import org.springframework.stereotype.Service;
 
 import java.io.File;
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
 @Service
 public class SolidWorksFileService {
 
-    @Autowired
     private SWPartRepository swPartRepository;
+    private SWAssemblyRepository swAssemblyRepository;
 
     public List<HierarchicalFile> scanDirectory(String directoryPath) {
         File directory = new File(directoryPath);
@@ -50,7 +50,7 @@ public class SolidWorksFileService {
                         scanDirectory(file, solidWorksFiles, level + 1);
                     } else {
                         if (file.getName().endsWith(".SLDPRT") || file.getName().endsWith(".SLDASM") || file.getName().endsWith(".SLDDRW")) {
-                            String fileNameWithoutExtension = file.getName().replaceFirst("[.][^.]+$", "").replaceAll("^\\.+", "");
+                            String fileNameWithoutExtension = file.getName();
                             solidWorksFiles.add(new HierarchicalFile(fileNameWithoutExtension, level + 1, false));
                         }
                     }
@@ -81,6 +81,25 @@ public class SolidWorksFileService {
         }
     }
 
+    public void saveFilesToDatabase(List<String> fileNames, List<Integer> fileLevels) {
+        for (int i = 0; i < fileNames.size(); i++) {
+            String fileName = fileNames.get(i);
+            int fileLevel = fileLevels.get(i);
+            if (fileName.endsWith(".SLDPRT")) {
+                SWPart part = new SWPart();
+                part.setName(fileName);
+                part.setLevel(fileLevel);
+                swPartRepository.save(part);
+            } else if (fileName.endsWith(".SLDASM")) {
+                SWAssembly assembly = new SWAssembly();
+                assembly.setName(fileName);
+                assembly.setLevel(fileLevel);
+                swAssemblyRepository.save(assembly);
+            }
+        }
+    }
+
+    @Data
     public static class HierarchicalFile {
         private final String name;
         private final int level;
@@ -90,18 +109,6 @@ public class SolidWorksFileService {
             this.name = name;
             this.level = level;
             this.isDirectory = isDirectory;
-        }
-
-        public String getName() {
-            return name;
-        }
-
-        public int getLevel() {
-            return level;
-        }
-
-        public boolean isDirectory() {
-            return isDirectory;
         }
     }
 }
