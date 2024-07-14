@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Инженер-конструктор</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #1b1b1b;
+      margin: 0;
+      padding: 0;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+      color: white;
+    }
+    .container {
+      background-color: #282828;
+      border-radius: 8px;
+      padding: 40px;
+      box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.3);
+      width: 80%;
+      max-width: 1200px;
+      position: relative;
+      text-align: center;
+    }
+    .brand {
+      position: absolute;
+      top: 20px;
+      left: 20px;
+      color: #ff3d00;
+      font-size: 24px;
+    }
+    .white-background {
+      background-color: #ffffff;
+      padding: 0 4px;
+      border-radius: 4px;
+    }
+    h1, h2 {
+      color: #ff3d00;
+    }
+    table {
+      width: 100%;
+      margin-top: 20px;
+      border-collapse: collapse;
+    }
+    table th, table td {
+      padding: 12px;
+      border: 1px solid #ffffff;
+      text-align: left;
+    }
+    table th {
+      background-color: #ff3d00;
+    }
+    .button {
+      background-color: #ff3d00;
+      border: none;
+      color: white;
+      padding: 10px 20px;
+      text-align: center;
+      text-decoration: none;
+      display: inline-block;
+      font-size: 16px;
+      margin: 10px 5px;
+      cursor: pointer;
+      border-radius: 4px;
+    }
+    .button:hover {
+      background-color: #e63600;
+    }
+    footer {
+      margin-top: 40px;
+      color: #f3f0f0;
+    }
+  </style>
+</head>
+<body>
+<div class="container">
+  <div class="brand">Red<span class="white-background">fab</span></div>
+  <h1>Инженер-конструктор</h1>
+  <section class="overview">
+    <h2>Проекты</h2>
+    <table>
+      <thead>
+      <tr>
+        <th>Название проекта</th>
+        <th>Статус</th>
+        <th>Дата завершения</th>
+        <th>Структура</th>
+        <th>Внести изменения</th>
+        <th>Завершить</th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr>
+        <td>ПАК 6</td>
+        <td>Завершен</td>
+        <td>01.12.2024</td>
+        <td><button class="button">Структура</button></td>
+        <td><button class="button">Внести изменения</button></td>
+        <td><button class="button">Завершить</button></td>
+      </tr>
+      <tr>
+        <td>ПАК 7</td>
+        <td>Завершен</td>
+        <td>15.03.2024</td>
+        <td><button class="button">Структура</button></td>
+        <td><button class="button">Внести изменения</button></td>
+        <td><button class="button">Завершить</button></td>
+      </tr>
+      <tr>
+        <td>ПАК 8</td>
+        <td>В работе</td>
+        <td>30.06.2024</td>
+        <td><button class="button">Структура</button></td>
+        <td><button class="button">Внести изменения</button></td>
+        <td><button class="button">Завершить</button></td>
+      </tr>
+      </tbody>
+    </table>
+    <a href="create" class="button">Создать новый проект</a>
+  </section>
+  <section class="overview">
+    <h2>Документация</h2>
+    <table>
+      <thead>
+      <tr>
+        <th>Название документа</th>
+        <th>Описание</th>
+        <th>Дата загрузки</th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr>
+        <td>Чертеж 1</td>
+        <td>Описание чертежа 1</td>
+        <td>01.01.2024</td>
+      </tr>
+      <tr>
+        <td>Документ 2</td>
+        <td>Описание документа 2</td>
+        <td>05.02.2024</td>
+      </tr>
+      <tr>
+        <td>Чертеж 3</td>
+        <td>Описание чертежа 3</td>
+        <td>10.03.2024</td>
+      </tr>
+      </tbody>
+    </table>
+  </section>
+  <section class="statistics">
+    <div class="widget">
+      <h2>Количество чертежей</h2>
+      <p>20</p>
+    </div>
+    <div class="widget">
+      <h2>Активные задачи</h2>
+      <p>10</p>
+    </div>
+    <div class="widget">
+      <h2>Количество проектов</h2>
+      <p>5</p>
+    </div>
+    <div class="widget">
+      <h2>Число сотрудников</h2>
+      <p>15</p>
+    </div>
+  </section>
+  <footer>
+    <p>&copy; 2024 Система автоматизации конструкторских работ</p>
+  </footer>
+</div>
+</body>
+</html>

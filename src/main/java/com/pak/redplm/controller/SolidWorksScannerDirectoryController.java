@@ -56,4 +56,9 @@ public class SolidWorksScannerDirectoryController {
             return "error";
         }
     }
+
+    @GetMapping("/create")
+    public String create() {
+        return "create";
+    }
 }
