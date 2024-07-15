@@ -57,6 +57,12 @@ public class SolidWorksScannerDirectoryController {
         }
     }
 
+    @GetMapping("/manual_structure")
+    public String showManualStructurePage() {
+        return "manual_structure";
+    }
+
+
     @GetMapping("/create")
     public String create() {
         return "create";

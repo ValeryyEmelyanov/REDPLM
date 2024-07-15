@@ -1,20 +1,21 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ru">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Scan Directory</title>
+  <title>REDPLM - Многофункциональная страница</title>
   <style>
+    /* Общие стили */
     body {
       font-family: Arial, sans-serif;
       background-color: #1b1b1b;
+      color: white;
       margin: 0;
       padding: 0;
       display: flex;
       justify-content: center;
       align-items: center;
       min-height: 100vh;
-      color: white;
     }
     .container {
       background-color: #282828;
@@ -22,9 +23,47 @@
       padding: 40px;
       box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.3);
       width: 80%;
-      max-width: 600px;
+      max-width: 700px;
       text-align: center;
       position: relative;
+    }
+    .hidden {
+      display: none;
+    }
+    .button {
+      background-color: #ff3d00;
+      border: none;
+      color: white;
+      padding: 10px 20px;
+      text-align: center;
+      font-size: 16px;
+      cursor: pointer;
+      border-radius: 4px;
+      width: 200px; /* Фиксированная ширина для кнопок */
+      margin-right: 10px;
+    }
+    .button:hover {
+      background-color: #e63600;
+    }
+    .save-button {
+      background-color: #4CAF50;
+    }
+    .save-button:hover {
+      background-color: #45a049;
+    }
+    .input-container {
+      margin: 10px 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .input-container input {
+      padding: 10px;
+      border-radius: 4px;
+      border: 1px solid #ff3d00;
+      background-color: #1b1b1b;
+      color: white;
+      flex-grow: 1;
     }
     .brand {
       position: absolute;
@@ -38,57 +77,118 @@
       padding: 0 4px;
       border-radius: 4px;
     }
-    h1 {
-      color: #ff3d00;
+    .additional-text {
+      position: absolute;
+      top: 20px;
+      left: calc(80px + 24px + 8px);
+      color: #ffffff;
+      font-size: 12px;
+      line-height: 12px;
+      text-align: left;
     }
-    .button {
-      background-color: #ff3d00;
-      border: none;
-      color: white;
-      padding: 10px;
-      text-align: center;
-      text-decoration: none;
+    .line-break {
       display: block;
-      font-size: 16px;
-      margin: 10px auto;
+    }
+    .tree {
+      margin: 0;
+      padding: 0;
+      list-style-type: none;
+    }
+    .tree ul {
+      list-style-type: none;
+      margin-left: 20px;
+      padding-left: 20px;
+      border-left: 1px solid #555;
+    }
+    .tree li {
+      margin: 0;
+      padding: 5px 0;
+      position: relative;
+    }
+    .tree li::before {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: -20px;
+      border-top: 1px solid #555;
+      width: 20px;
+      height: 10px;
+    }
+    .tree li:last-child::before {
+      border-left: 1px solid #555;
+      border-bottom: none;
+      height: auto;
+    }
+    .tree span {
       cursor: pointer;
-      border-radius: 4px;
-      width: 80%;
-      max-width: 200px;
     }
-    .button:hover {
-      background-color: #e63600;
-    }
-    .input-container {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      margin: 10px 0;
-    }
-    .input-container input {
-      padding: 10px;
-      border-radius: 4px;
-      border: 1px solid #ffffff;
-      width: 70%;
-      margin-left: 10px;
-      background-color: #383838;
-      color: white;
+    .tree span:hover {
+      text-decoration: underline;
     }
   </style>
 </head>
 <body>
 <div class="container">
+  <!-- Логотип с добавлением фона -->
   <div class="brand">Red<span class="white-background">fab</span></div>
-  <h1>Создание нового проекта</h1>
-  <button class="button">Ручное заполнение</button>
-  <div class="input-container">
-    <button class="button">Сканирование директории</button>
-    <input type="text" placeholder="Укажите путь к директории">
+  <!-- Дополнительный текст с переносом строки -->
+  <div class="additional-text">
+    Цифровое<br class="line-break">производство в масштабе
   </div>
-  <div class="input-container">
-    <button class="button">Сканирование файла структуры</button>
-    <input type="text" placeholder="Укажите путь к файлу">
+  <!-- Заголовок страницы -->
+  <h1>Создание нового проекта</h1>
+  <!-- Кнопка для создания структуры вручную -->
+  <button class="button" style="width: 100%;" onclick="location.href='/manual_structure'">Создать структуру вручную</button>
+  <!-- Форма для сканирования директории -->
+  <form id="scanDirectoryForm" action="/scan" method="post" class="input-container">
+    <button type="button" class="button" onclick="submitForm('scanDirectoryForm')">Сканирование директории</button>
+    <input type="text" name="directory" placeholder="Укажите путь к директории">
+  </form>
+  <!-- Форма для сканирования дерева директории -->
+  <form id="scanTreeForm" action="/scanTree" method="post" class="input-container">
+    <button type="button" class="button" onclick="submitForm('scanTreeForm')">Сканирование дерева директории</button>
+    <input type="text" name="directory" placeholder="Укажите путь к директории">
+  </form>
+
+  <!-- Результаты сканирования для сохранения в базу данных -->
+  <div id="scanResults" class="hidden">
+    <h1>Результаты сохранения в базу данных</h1>
+    <div id="error" style="color: red;"></div>
+    <table>
+      <thead>
+      <tr>
+        <th>Название части</th>
+      </tr>
+      </thead>
+      <tbody id="partsList">
+      <!-- Динамически заполняемое -->
+      </tbody>
+    </table>
+  </div>
+
+  <!-- Дерево директории для сканирования -->
+  <div id="scanTree" class="hidden">
+    <h1>Сканирование дерева директории</h1>
+    <div id="treeError" style="color: red;"></div>
+    <ul class="tree" id="directoryTree">
+      <!-- Динамически заполняемое -->
+    </ul>
+    <!-- Кнопка для сохранения в базу данных -->
+    <button class="button save-button" onclick="saveToDatabase()">Сохранить в базу данных</button>
   </div>
 </div>
+
+<script>
+  // Функция для отправки формы по её идентификатору
+  function submitForm(formId) {
+    document.getElementById(formId).submit();
+  }
+
+  // Функция для сохранения в базу данных (заглушка на клиентской стороне)
+  function saveToDatabase() {
+    alert('Данные сохранены в базу данных');
+    // Здесь могла бы быть реализация отправки данных на сервер
+  }
+</script>
 </body>
 </html>
