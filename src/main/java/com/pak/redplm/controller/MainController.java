@@ -22,14 +22,12 @@ public class MainController {
     public String getRoleSelectionPage(Model model){
         EUserRole[] roles = EUserRole.values();
         model.addAttribute("roles", roles);
-        return "selectionPage";
+        return "rolePages/selectionRolePage";
     }
 
     @GetMapping("/startPage")
     public String selectPage(@RequestParam("role") EUserRole role, Model model) {
-        // Преобразуем имя роли в строку с именем шаблона
-        String pageName = role.name().toLowerCase() + "Page";
-        // Проверка на существование шаблона может быть добавлена здесь
+        String pageName = "rolePages/" + role.name().toLowerCase() + "Page";
         return pageName;
     }
 }

@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Manual Structure Input</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #1b1b1b;
+      color: white;
+      margin: 0;
+      padding: 20px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+    .tree-container {
+      background-color: #282828;
+      border-radius: 8px;
+      padding: 20px;
+      box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.3);
+      width: 800px;
+      max-height: 80vh;
+      overflow: auto;
+      margin-bottom: 20px;
+    }
+    .tree-container h1 {
+      color: #ff3d00;
+      font-size: 24px;
+      margin-bottom: 20px;
+      text-align: center;
+    }
+    .tree {
+      margin: 0;
+      padding: 0;
+      list-style-type: none;
+    }
+    .tree .file-entry {
+      display: flex;
+      align-items: center;
+      margin-bottom: 5px;
+      transition: background-color 0.3s ease;
+    }
+    .tree .file-entry:hover {
+      background-color: #333;
+    }
+    .tree input {
+      background-color: #1b1b1b;
+      color: #ffffff;
+      border: 1px solid #555;
+      border-radius: 4px;
+      padding: 5px;
+      flex-grow: 1;
+      margin-left: 10px;
+      transition: background-color 0.3s ease, border 0.3s ease;
+    }
+    .tree input:focus {
+      background-color: #333;
+      border-color: #ff3d00;
+    }
+    .buttons-container {
+      display: flex;
+      justify-content: center;
+      width: 100%;
+      margin-bottom: 20px;
+    }
+    .buttons-container button {
+      background-color: #4CAF50;
+      color: white;
+      padding: 10px 20px;
+      border: none;
+      cursor: pointer;
+      margin-right: 10px;
+      transition: background-color 0.3s ease;
+    }
+    .buttons-container button:hover {
+      background-color: #45a049;
+    }
+    .save-button {
+      background-color: #ff3d00;
+    }
+    .save-button:hover {
+      background-color: #d32f2f;
+    }
+    .entry-buttons {
+      display: flex;
+      align-items: center;
+    }
+    .arrow, .move, .add-button, .delete-button {
+      cursor: pointer;
+      margin: 0 5px;
+      font-size: 20px;
+      transition: color 0.3s ease;
+    }
+    .arrow.disabled, .move.disabled {
+      color: #555;
+      cursor: not-allowed;
+    }
+    .arrow:hover:not(.disabled), .move:hover:not(.disabled), .add-button:hover, .delete-button:hover {
+      color: #ff3d00;
+    }
+    .delete-button {
+      background-color: #ff3d00;
+      color: white;
+      border: none;
+      padding: 5px 10px;
+      border-radius: 4px;
+    }
+    .delete-button:hover {
+      background-color: #d32f2f;
+    }
+    .input-container {
+      margin-bottom: 20px;
+      display: flex;
+      align-items: center;
+      width: 100%;
+      justify-content: center;
+    }
+    .input-container input {
+      padding: 10px;
+      border-radius: 4px;
+      border: 1px solid #ffffff;
+      width: 50%;
+      margin-left: 10px;
+      background-color: #383838;
+      color: white;
+    }
+  </style>
+</head>
+<body>
+<div class="buttons-container">
+  <button onclick="location.href='/scan'">Редактировать</button>
+  <form action="/saveToDatabase" method="post" style="margin: 0;">
+    <button type="submit" class="save-button">Сохранить в базу данных</button>
+  </form>
+</div>
+<div class="tree-container">
+  <h1>Создание структуры вручную</h1>
+  <div class="input-container">
+    <input type="text" placeholder="Введите имя части" id="partNameInput">
+    <button onclick="addPart()">Добавить часть</button>
+  </div>
+  <ul class="tree" id="manualTree">
+    <!-- Динамически добавляемые части -->
+  </ul>
+</div>
+<script>
+  function addPart() {
+    const partName = document.getElementById('partNameInput').value;
+    if (partName) {
+      const li = document.createElement('li');
+      li.className = 'file-entry';
+      li.innerHTML = `
+        <div class="entry-buttons">
+          <span class="move up-move" onclick="moveEntry(this, -1)">&#8593;</span>
+          <span class="move down-move" onclick="moveEntry(this, 1)">&#8595;</span>
+          <button type="button" class="add-button" onclick="addNewEntryAbove(this)">Добавить</button>
+          <span class="arrow left-arrow disabled" onclick="changeLevel(this, -1)">&#8592;</span>
+          <span class="arrow right-arrow" onclick="changeLevel(this, 1)">&#8594;</span>
+          <button type="button" class="delete-button" onclick="deleteEntry(this)">Удалить</button>
+        </div>
+        <input type="text" value="${partName}" style="margin-left: 0px">
+      `;
+      document.getElementById('manualTree').appendChild(li);
+      document.getElementById('partNameInput').value = '';
+    }
+  }
+
+  function changeLevel(element, direction) {
+    const entry = element.closest('.file-entry');
+    const input = entry.querySelector('input');
+    let marginLeft = parseInt(input.style.marginLeft || '0', 10);
+    if (direction === -1 && marginLeft > 0) {
+      marginLeft -= 20;
+    } else if (direction === 1) {
+      marginLeft += 20;
+    }
+    input.style.marginLeft = marginLeft + 'px';
+    toggleLeftArrow(entry, marginLeft);
+  }
+
+  function toggleLeftArrow(entry, marginLeft) {
+    const leftArrow = entry.querySelector('.left-arrow');
+    if (marginLeft === 0) {
+      leftArrow.classList.add('disabled');
+    } else {
+      leftArrow.classList.remove('disabled');
+    }
+  }
+
+  function addNewEntryAbove(element) {
+    const entry = element.closest('.file-entry');
+    const newEntry = document.createElement('li');
+    newEntry.className = 'file-entry';
+    newEntry.innerHTML = `
+      <div class="entry-buttons">
+        <span class="move up-move" onclick="moveEntry(this, -1)">&#8593;</span>
+        <span class="move down-move" onclick="moveEntry(this, 1)">&#8595;</span>
+        <button type="button" class="add-button" onclick="addNewEntryAbove(this)">Добавить</button>
+        <span class="arrow left-arrow disabled" onclick="changeLevel(this, -1)">&#8592;</span>
+        <span class="arrow right-arrow" onclick="changeLevel(this, 1)">&#8594;</span>
+        <button type="button" class="delete-button" onclick="deleteEntry(this)">Удалить</button>
+      </div>
+      <input type="text" value="New Part" style="margin-left: 0px">
+    `;
+    entry.parentNode.insertBefore(newEntry, entry);
+  }
+
+  function deleteEntry(element) {
+    const entry = element.closest('.file-entry');
+    entry.remove();
+  }
+
+  function moveEntry(element, direction) {
+    const entry = element.closest('.file-entry');
+    if (direction === -1 && entry.previousElementSibling) {
+      entry.parentNode.insertBefore(entry, entry.previousElementSibling);
+    } else if (direction === 1 && entry.nextElementSibling) {
+      entry.parentNode.insertBefore(entry.nextElementSibling, entry);
+    }
+  }
+</script>
+</body>
+</html>

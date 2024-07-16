@@ -17,7 +17,7 @@ public class SolidWorksScannerDirectoryController {
 
     @GetMapping("/scanPage")
     public String showScanPage() {
-        return "scannerDirectoryRequest";
+        return "scanDirectoryPages/scanDirectoryRequest";
     }
 
     @PostMapping("/scan")
@@ -25,7 +25,7 @@ public class SolidWorksScannerDirectoryController {
         try {
             List<HierarchicalFile> solidWorksFiles = solidWorksFileService.scanDirectory(directoryPath);
             model.addAttribute("solidWorksFiles", solidWorksFiles);
-            return "scanDirectoryResult";
+            return "scanDirectoryPages/scanDirectoryResult";
         } catch (IllegalArgumentException e) {
             model.addAttribute("error", e.getMessage());
             return "error";
@@ -37,7 +37,7 @@ public class SolidWorksScannerDirectoryController {
         try {
             String treeHtml = solidWorksFileService.scanDirectoryTree(directoryPath);
             model.addAttribute("treeHtml", treeHtml);
-            return "scanDirectoryTreeResult";
+            return "scanDirectoryPages/scanDirectoryTreeResult";
         } catch (IllegalArgumentException e) {
             model.addAttribute("error", e.getMessage());
             return "error";
@@ -50,7 +50,7 @@ public class SolidWorksScannerDirectoryController {
         try {
             solidWorksFileService.saveFilesToDatabase(fileNames, fileLevels);
             model.addAttribute("parts", fileNames);
-            return "saveResult";
+            return "scanDirectoryPages/saveScanResult";
         } catch (Exception e) {
             model.addAttribute("error", e.getMessage());
             return "error";
@@ -59,12 +59,12 @@ public class SolidWorksScannerDirectoryController {
 
     @GetMapping("/manual_structure")
     public String showManualStructurePage() {
-        return "manual_structure";
+        return "scanDirectoryPages/manualCreateStructure";
     }
 
 
     @GetMapping("/create")
     public String create() {
-        return "create";
+        return "scanDirectoryPages/createNewProjectPage";
     }
 }
