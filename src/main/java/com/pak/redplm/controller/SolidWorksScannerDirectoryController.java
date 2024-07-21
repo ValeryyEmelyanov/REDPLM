@@ -1,11 +1,14 @@
 package com.pak.redplm.controller;
 
+import com.pak.redplm.entity.SWAssembly;
+import com.pak.redplm.service.ExcelService;
 import com.pak.redplm.service.SolidWorksFileService;
 import com.pak.redplm.service.SolidWorksFileService.HierarchicalFile;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 
@@ -14,6 +17,9 @@ public class SolidWorksScannerDirectoryController {
 
     @Autowired
     private SolidWorksFileService solidWorksFileService;
+
+    @Autowired
+    private ExcelService excelService;
 
     @GetMapping("/scanPage")
     public String showScanPage() {
@@ -37,7 +43,7 @@ public class SolidWorksScannerDirectoryController {
         try {
             String treeHtml = solidWorksFileService.scanDirectoryTree(directoryPath);
             model.addAttribute("treeHtml", treeHtml);
-            return "scanDirectoryPages/scanDirectoryTreeResult";
+            return "scanDirectoryPages/scanExelFileStructure";
         } catch (IllegalArgumentException e) {
             model.addAttribute("error", e.getMessage());
             return "error";
@@ -67,4 +73,20 @@ public class SolidWorksScannerDirectoryController {
     public String create() {
         return "scanDirectoryPages/createNewProjectPage";
     }
+
+    @PostMapping("/scanResult")
+    public List<SWAssembly> scanFile(@RequestParam("file") MultipartFile file) {
+        try {
+            return excelService.readExcelFile(String.valueOf(file));
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
+//    @PostMapping("/saveToDatabase")
+//    public void saveToDatabase(@RequestBody List<SWAssembly> assemblies) {
+//        excelService.saveAssemblies(assemblies);
+//    }
+
 }

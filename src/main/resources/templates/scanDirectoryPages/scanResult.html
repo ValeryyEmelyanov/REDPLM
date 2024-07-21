@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Scan Directory Tree</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #1b1b1b;
+      color: white;
+      margin: 0;
+      padding: 20px;
+    }
+    .button-container {
+      display: flex;
+      gap: 10px;
+      margin: 20px 0;
+    }
+    button {
+      background-color: #4CAF50;
+      color: white;
+      padding: 10px 20px;
+      border: none;
+      cursor: pointer;
+    }
+    button:hover {
+      background-color: #45a049;
+    }
+  </style>
+</head>
+<body>
+<h1>Scan Directory Tree</h1>
+<div class="button-container">
+  <form id="scanForm" enctype="multipart/form-data">
+    <input type="file" id="fileInput" name="file" accept=".xlsx" required>
+    <button type="button" onclick="scanFile()">Сканировать</button>
+  </form>
+</div>
+<div id="scanResults"></div>
+<script>
+  function scanFile() {
+    const form = document.getElementById('scanForm');
+    const formData = new FormData(form);
+    fetch('/scan', {
+      method: 'POST',
+      body: formData
+    })
+            .then(response => response.json())
+            .then(data => {
+              const scanResults = document.getElementById('scanResults');
+              scanResults.innerHTML = generateTreeHTML(data);
+            })
+            .catch(error => console.error('Error:', error));
+  }
+
+  function generateTreeHTML(data) {
+    let html = '<ul class="tree">';
+    data.forEach(file => {
+      html += `<li><span>${file.name}</span></li>`;
+    });
+    html += '</ul>';
+    return html;
+  }
+</script>
+</body>
+</html>
