@@ -21,8 +21,7 @@ public class SecurityConfiguration {
                 .formLogin((form) -> form
                         .loginPage("/login")
                         .permitAll())
-                .logout((logout) -> logout.permitAll())
-                .csrf().disable(); // Отключение CSRF защиты
+                .logout((logout) -> logout.permitAll());
 
         return http.build();
     }
