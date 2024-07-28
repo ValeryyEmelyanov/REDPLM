@@ -25,4 +25,5 @@ public interface UserEntityRepository extends JpaRepository<UserEntity, Long> {
     void deleteByLastname (String lastname);
     void deleteByEmail (String email);
 
+    boolean existsByEmail(String email);
 }

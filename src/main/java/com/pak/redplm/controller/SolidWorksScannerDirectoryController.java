@@ -13,6 +13,7 @@ import org.springframework.web.multipart.MultipartFile;
 import java.util.List;
 
 @Controller
+//@RequestMapping("/engineer")
 public class SolidWorksScannerDirectoryController {
 
     @Autowired

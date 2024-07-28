@@ -52,6 +52,11 @@ public class InstructionManualService {
         instructionManualRepository.deleteByDecimalNumber(decimalNumber);
     }
     // Other
+
+    public List<InstructionManual> findAll(){
+        return instructionManualRepository.findAll();
+    }
+
     // Получение количества деталей
     public long getCount(){
         return instructionManualRepository.count();

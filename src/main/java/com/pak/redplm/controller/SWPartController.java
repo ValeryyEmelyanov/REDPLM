@@ -1,27 +1,34 @@
 package com.pak.redplm.controller;
 
 import com.pak.redplm.entity.SWPart;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import java.util.ArrayList;
+
+@Controller
 @RequestMapping("/swpart")
 public class SWPartController {
 
-// Добавление детали
-    // Возвращение формы пользователю
     @GetMapping("/form")
-    public String getDoctorAddForm(){
-        return "swpart/swpart-add-form";
+    public String getSWPartAddForm(Model model) {
+        model.addAttribute("swPart", new SWPart());
+        return "workWithSolidWorksPart/formForAddSWPart"; // Путь к форме добавления детали
     }
 
-    // Получение детали из заполненной формы:
     @PostMapping("/add")
-    public String addSWPart(SWPart swPart){
-        return "redirect:/swpart/form";
+    public String addSWPart(SWPart swPart) {
+        // Логика для сохранения SWPart (например, swPartService.save(swPart))
+        return "redirect:/swpart/listAllParts"; // Перенаправление на страницу списка деталей
     }
 
-//Получение детали по:
-//    @GetMapping("/{id}")
-//    public String getSWPartById()
+    @GetMapping("/listAllParts")
+    public String listAllParts(Model model) {
+        // Логика для получения всех деталей (например, List<SWPart> parts = swPartService.findAll())
+        model.addAttribute("parts", new ArrayList<SWPart>());
+        return "workWithSolidWorksPart/listAllParts";
+    }
 }

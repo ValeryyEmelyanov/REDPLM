@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Добавить Сборку</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #1b1b1b;
+      margin: 0;
+      padding: 0;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+    }
+    .container {
+      background-color: #282828;
+      border-radius: 8px;
+      padding: 60px;
+      box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.3);
+      width: 400px;
+      position: relative;
+    }
+    .brand {
+      position: absolute;
+      top: 20px;
+      left: 20px;
+      color: #ff3d00;
+      font-size: 24px;
+    }
+    .white-background {
+      background-color: #ffffff;
+      padding: 0 4px;
+      border-radius: 4px;
+    }
+    .additional-text {
+      position: absolute;
+      top: 20px;
+      left: calc(80px + 24px + 8px);
+      color: #ffffff;
+      font-size: 12px;
+      line-height: 12px;
+      text-align: left;
+    }
+    form {
+      display: flex;
+      flex-direction: column;
+    }
+    input, select {
+      padding: 10px;
+      margin-bottom: 20px;
+      border: 1px solid #ff3d00;
+      border-radius: 4px;
+      color: #ffffff;
+      background-color: #1b1b1b;
+    }
+    button {
+      padding: 12px;
+      background-color: #ff3d00;
+      color: white;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+    }
+    button:hover {
+      background-color: #d32f2f;
+    }
+    .link {
+      color: #ff3d00;
+      text-align: center;
+      margin-top: 20px;
+    }
+  </style>
+</head>
+<body>
+<div class="container">
+  <div class="brand">Red<span class="white-background">fab</span></div>
+  <div class="additional-text">Создание нового контейнера</div>
+  <form action="/container/add" method="post">
+    <input type="text" name="containerName" placeholder="Название контейнера" required>
+    <input type="text" name="description" placeholder="Описание контейнера" required>
+    <button type="submit">Создать контейнер</button>
+  </form>
+</div>
+</body>
+</html>
