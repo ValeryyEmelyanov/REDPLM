@@ -74,57 +74,30 @@
             margin-top: 20px;
         }
     </style>
-    <script>
-        // Форматирование имен enum в более читаемый вид
-        function formatEnumName(name) {
-            return name.toLowerCase()
-                .split('_')
-                .map(word => word.charAt(0).toUpperCase() + word.slice(1))
-                .join(' ');
-        }
-
-        // Заполнение выпадающих списков
-        document.addEventListener("DOMContentLoaded", function() {
-            const departments = ["DESIGN_ENGINEER", "ELECTRONICS_ENGINEER", "ENGINEER"];
-            const roles = ["ADMIN", "USER", "WORKER", "STOREKEEPER", "MANAGER", "DESIGN_ENGINEER"];
-
-            const departmentSelect = document.getElementById("userDepartment");
-            const roleSelect = document.getElementById("userRole");
-
-            departments.forEach(dept => {
-                const option = document.createElement("option");
-                option.value = dept;
-                option.textContent = formatEnumName(dept);
-                departmentSelect.appendChild(option);
-            });
-
-            roles.forEach(role => {
-                const option = document.createElement("option");
-                option.value = role;
-                option.textContent = formatEnumName(role);
-                roleSelect.appendChild(option);
-            });
-        });
-    </script>
 </head>
 <body>
 <div class="container">
     <div class="brand">Red<span class="white-background">fab</span></div>
     <div class="additional-text">Цифровое<br>производство в масштабе</div>
-    <form action="/register" method="post">
-        <input type="text" name="firstname" placeholder="First Name" required>
-        <input type="text" name="lastname" placeholder="Last Name" required>
-        <input type="email" name="email" placeholder="Email" required>
-        <input type="password" name="password" placeholder="Password" required>
+    <form th:action="@{/registration}" method="post" th:object="${userEntity}">
+        <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
+        <input type="text" th:field="*{name}" placeholder="First Name" required>
+<!--        <input type="text" th:field="*{lastname}" placeholder="Last Name" required>-->
+        <input type="email" th:field="*{email}" placeholder="Email" required>
+        <input type="password" th:field="*{password}" placeholder="Password" required>
 
-        <select id="userDepartment" name="userDepartment" required>
-            <option value="" disabled selected>Select Department</option>
-            <!-- Options will be populated by JavaScript -->
-        </select>
+<!--        <select th:field="*{userDepartment}" required>-->
+<!--            <option value="" disabled selected>Select Department</option>-->
+<!--            <option th:each="department : ${departments}"-->
+<!--                    th:value="${department}"-->
+<!--                    th:text="${department}">Department</option>-->
+<!--        </select>-->
 
-        <select id="userRole" name="userRole" required>
+        <select th:field="*{role}" required>
             <option value="" disabled selected>Select Role</option>
-            <!-- Options will be populated by JavaScript -->
+            <option th:each="role : ${roles}"
+                    th:value="${role}"
+                    th:text="${role}">Role</option>
         </select>
 
         <button type="submit">Register</button>
