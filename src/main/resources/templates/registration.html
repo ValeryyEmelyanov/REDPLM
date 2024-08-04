@@ -81,17 +81,17 @@
     <div class="additional-text">Цифровое<br>производство в масштабе</div>
     <form th:action="@{/registration}" method="post" th:object="${userEntity}">
         <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
-        <input type="text" th:field="*{name}" placeholder="First Name" required>
-<!--        <input type="text" th:field="*{lastname}" placeholder="Last Name" required>-->
+        <input type="text" th:field="*{firstname}" placeholder="First Name" required>
+        <input type="text" th:field="*{lastname}" placeholder="Last Name" required>
         <input type="email" th:field="*{email}" placeholder="Email" required>
         <input type="password" th:field="*{password}" placeholder="Password" required>
 
-<!--        <select th:field="*{userDepartment}" required>-->
-<!--            <option value="" disabled selected>Select Department</option>-->
-<!--            <option th:each="department : ${departments}"-->
-<!--                    th:value="${department}"-->
-<!--                    th:text="${department}">Department</option>-->
-<!--        </select>-->
+        <select th:field="*{userDepartment}" required>
+            <option value="" disabled selected>Select Department</option>
+            <option th:each="department : ${departments}"
+                    th:value="${department}"
+                    th:text="${department}">Department</option>
+        </select>
 
         <select th:field="*{role}" required>
             <option value="" disabled selected>Select Role</option>

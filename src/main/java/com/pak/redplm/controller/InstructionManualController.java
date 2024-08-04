@@ -1,7 +1,6 @@
 package com.pak.redplm.controller;
 
 import com.pak.redplm.entity.InstructionManual;
-import org.aspectj.apache.bcel.generic.Instruction;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -13,6 +12,7 @@ import java.util.ArrayList;
 @Controller
 @RequestMapping("/instruction")
 public class InstructionManualController {
+
 
     @GetMapping("/form")
     public String getInstructionAddForm(Model model) {
@@ -30,6 +30,6 @@ public class InstructionManualController {
     public String listInstructions(Model model) {
         // Логика для получения всех инструкций
         model.addAttribute("instructions", new ArrayList<InstructionManual>());
-        return "listAllInstructions";
+        return "workWithInstruction/listAllInstructions";
     }
 }

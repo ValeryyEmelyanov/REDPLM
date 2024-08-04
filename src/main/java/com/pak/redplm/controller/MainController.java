@@ -6,10 +6,6 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
-    /*  У одного пользователя, работающего *конструктором есть возможность зайти под ролью *сборщика
-    Прописывается индивидуально, связано с отпусками, больничными и перераспределением человекочасов
-    в случае горящих сроков */
-
 @Controller
 public class MainController {
 
@@ -30,4 +26,5 @@ public class MainController {
         String pageName = "rolePages/" + role.name().toLowerCase() + "Page";
         return pageName;
     }
+
 }

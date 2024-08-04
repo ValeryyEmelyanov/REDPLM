@@ -1,9 +1,9 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ru">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Add Part</title>
+  <title>Добавить Деталь в Сборку</title>
   <style>
     body {
       font-family: Arial, sans-serif;
@@ -77,14 +77,23 @@
 <body>
 <div class="container">
   <div class="brand">Red<span class="white-background">fab</span></div>
-  <div class="additional-text">Добавление новой детали</div>
-  <form action="/add-part" method="post">
-    <input type="text" name="partName" placeholder="Part Name" required>
-    <input type="text" name="partNumber" placeholder="Part Number" required>
-    <input type="text" name="manufacturer" placeholder="Manufacturer" required>
-    <input type="number" name="quantity" placeholder="Quantity in Stock" required>
-    <input type="text" name="description" placeholder="Description" required>
-    <button type="submit">Add Part</button>
+  <div class="additional-text">Добавление новой детали в сборку</div>
+  <form action="/detail/add" method="post">
+    <input type="text" name="detailName" placeholder="Название детали" required>
+    <input type="text" name="description" placeholder="Описание" required>
+    <select name="pak" required>
+      <option value="" disabled selected>Выберите ПАК</option>
+      <option value="PAK_1">PAK_1</option>
+      <option value="PAK_2">PAK_2</option>
+      <!-- Добавьте другие ПАКи по мере необходимости -->
+    </select>
+    <select name="assembly" required>
+      <option value="" disabled selected>Выберите сборку</option>
+      <option value="Assembly_1">Сборка 1</option>
+      <option value="Assembly_2">Сборка 2</option>
+      <!-- Добавьте другие сборки по мере необходимости -->
+    </select>
+    <button type="submit">Добавить деталь</button>
   </form>
 </div>
 </body>

@@ -1,6 +1,7 @@
 package com.pak.redplm.security;
 
 import com.pak.redplm.entity.UserEntity;
+import jakarta.validation.constraints.NotEmpty;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -16,16 +17,20 @@ import java.util.List;
 @Setter
 public class UserDetailsImpl implements UserDetails {
     private Long id;
-    private String name;
+    private String firstname;
+    private String lastname;
     private String email;
     private String password;
+    private String userDepartment;
     private Collection<? extends GrantedAuthority> authorities;
 
-    public UserDetailsImpl(Long id, String name, String email, String password, Collection<? extends GrantedAuthority> authorities) {
+    public UserDetailsImpl(Long id, String firstname, String lastname, String email, String password, @NotEmpty(message = "Password cannot be empty") String userEntityPassword, Collection<? extends GrantedAuthority> authorities) {
         this.id = id;
-        this.name = name;
+        this.firstname = firstname;
+        this.lastname = lastname;
         this.email = email;
         this.password = password;
+        this.userDepartment = userDepartment;
         this.authorities = authorities;
     }
 
@@ -33,9 +38,11 @@ public class UserDetailsImpl implements UserDetails {
         List<GrantedAuthority> authorityList = List.of(new SimpleGrantedAuthority(userEntity.getRole().name()));
         return new UserDetailsImpl(
                 userEntity.getId(),
-                userEntity.getName(),
+                userEntity.getFirstname(),
+                userEntity.getLastname(),
                 userEntity.getEmail(),
                 userEntity.getPassword(),
+                userEntity.getUserDepartment().name(),
                 authorityList);
     }
 

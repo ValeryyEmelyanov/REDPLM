@@ -43,14 +43,6 @@ public class UserService {
         userEntityRepository.deleteByEmail(email);
     }
 
-//    public void deleteByFirstname(String firstname) {
-//        userEntityRepository.deleteByFirstname(firstname);
-//    }
-
-//    public void deleteByLastname(String lastname) {
-//        userEntityRepository.deleteByLastname(lastname);
-//    }
-
     public List<UserEntity> findAllUsers() {
         return userEntityRepository.findAll();
     }
