@@ -28,35 +28,27 @@ public class ExcelService {
     @Autowired
     private SWAssemblyRepository swAssemblyRepository;
 
-    public static void main1(String[] args) throws IOException {
-        Workbook wb = new HSSFWorkbook();
-        Sheet assemblyLvl1 = wb.createSheet("assemblyLvl1");
+    public void createSampleExcelFile(String filePath) throws IOException {
+        Workbook workbook = new XSSFWorkbook();
+        Sheet sheet = workbook.createSheet("Sample Sheet");
 
-        Row row = assemblyLvl1.createRow(3);
-        Row row2 = assemblyLvl1.createRow(4);
-        Cell cell = row.createCell(4);
-        cell.setCellValue("RED.000");
+        // Создание заголовка
+        Row headerRow = sheet.createRow(0);
+        headerRow.createCell(0).setCellValue("Header 1");
+        headerRow.createCell(1).setCellValue("Header 2");
 
+        // Создание примера данных
+        Row row = sheet.createRow(1);
+        row.createCell(0).setCellValue("Value 1");
+        row.createCell(1).setCellValue("Value 2");
 
-        Sheet assemblyLvl2 = wb.createSheet("assemblyLvl2");
-        Sheet assemblyLvl3 = wb.createSheet("assemblyLvl3");
-
-        FileOutputStream fos = new FileOutputStream("C:/Users/Emelyanov/Desktop/my.xls");
-
-        wb.write(fos);
-        fos.close();
-
+        // Запись в файл
+        try (FileOutputStream fileOut = new FileOutputStream(filePath)) {
+            workbook.write(fileOut);
+        }
+        workbook.close();
     }
 
-    public static void main(String[] args) throws IOException {
-        FileInputStream fis = new FileInputStream("C:/Users/Emelyanov/Desktop/RED.000 Комплекс аддитивный 28.06.xlsx");
-        Workbook wb = new XSSFWorkbook(fis);
-        String result = getCellText(wb.getSheetAt(0).getRow(10).getCell(14));
-        out.println(result);
-        fis.close();
-    }
-
-    // Alternatively, get the value and format it yourself
     public static String getCellText (Cell cell){
 
         String result = "";
@@ -139,14 +131,4 @@ public class ExcelService {
         return new SWDrawing();
     }
 
-//    public void saveAssemblies(List<SWAssembly> assemblies) {
-//        // Проверяем, что список сборок не пустой
-//        if (assemblies != null && !assemblies.isEmpty()) {
-//            // Используем репозиторий для сохранения всех сборок в базе данных
-//            swAssemblyRepository.saveAll(assemblies);
-//        } else {
-//            // Если список пустой, можно записать лог или выбросить исключение
-//            System.out.println("Список сборок пустой. Нечего сохранять.");
-//        }
-//    }
 }

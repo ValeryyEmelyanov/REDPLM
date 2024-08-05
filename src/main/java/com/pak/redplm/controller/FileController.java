@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/pak")
+@RequestMapping("/directory")
 public class FileController {
 
 
@@ -24,16 +24,22 @@ public class FileController {
 
     @PostMapping("/create")
     public void createPak(@RequestParam String pakName) {
-        fileService.createPakFolder(pakName, "/path/to/your/directory");
+        fileService.createPakFolder(pakName, "D:/REDPLM/REDPLM/Library/");
     }
 
     @PostMapping("/update")
-    public void updatePak(@RequestParam String pakName, @RequestBody List<SWPart> swPartList, @RequestBody List<SWAssembly> swAssemblyList) {
-        fileService.updateExcelSummary(pakName, "/path/to/your/directory", swPartList, swAssemblyList);
+    public void updatePak(@RequestParam String pakName,
+                          @RequestBody List<SWPart> swPartList,
+                          @RequestBody List<SWAssembly> swAssemblyList)
+    {
+        fileService.updateExcelSummary(pakName, "/D:/REDPLM/REDPLM/Library/", swPartList, swAssemblyList);
     }
 
     @PostMapping("/replace")
-    public void replaceDetail(@RequestParam String pakName, @RequestParam String detailName, @RequestParam String newDetailPath) {
-        fileService.replaceDetail(pakName, "/path/to/your/directory", detailName, newDetailPath);
+    public void replaceDetail(@RequestParam String pakName,
+                              @RequestParam String detailName,
+                              @RequestParam String newDetailPath)
+    {
+        fileService.replaceDetail(pakName, "D:/REDPLM/REDPLM/Library/", detailName, newDetailPath);
     }
 }

@@ -32,18 +32,16 @@ public class SecurityConfiguration {
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
                 .authorizeHttpRequests((requests) -> requests
-                        .requestMatchers("/registration", "/scanPage", "/scan").permitAll()
+                        .requestMatchers("/registration", "/scanPage", "/scan", "/pak/**").permitAll()
                         .anyRequest().authenticated())
                 .formLogin((form) -> form
                         .loginPage("/login")
                         .permitAll())
-                .logout((logout) -> logout.permitAll());
+                .logout((logout) -> logout.permitAll())
+
+                .csrf().disable();
 
         return http.build();
     }
 
-//    @Bean
-//    public PasswordEncoder passwordEncoder() {
-//        return new BCryptPasswordEncoder();
-//    }
 }

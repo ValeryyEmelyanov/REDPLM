@@ -40,4 +40,6 @@ public class UserEntity {
     @Enumerated(EnumType.STRING)
     @Column(name = "role")
     private ERole role = ERole.USER_ROLE;
+
+
 }

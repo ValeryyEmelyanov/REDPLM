@@ -2,10 +2,12 @@ package com.pak.redplm.service;
 
 import com.pak.redplm.entity.PAK;
 import com.pak.redplm.repository.PAKRepository;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
 
+@Service
 public class  PAKService {
 
     private final PAKRepository pakRepository;
@@ -17,6 +19,10 @@ public class  PAKService {
     // Create
     public PAK createPAK(PAK pak) {
         return pakRepository.save(pak);
+    }
+
+    public void savePak(PAK pak) {
+        pakRepository.save(pak);
     }
 
     // Read
