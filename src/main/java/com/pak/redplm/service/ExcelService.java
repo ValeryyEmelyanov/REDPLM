@@ -3,10 +3,12 @@ package com.pak.redplm.service;
 import com.pak.redplm.entity.*;
 import com.pak.redplm.entity.enumClasses.EAssemblyStatus;
 import com.pak.redplm.repository.SWAssemblyRepository;
+import com.pak.redplm.util.FileStructureUtil;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.apache.poi.ss.usermodel.*;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.apache.poi.ss.usermodel.*;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -18,6 +20,8 @@ import java.time.Duration;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import static java.lang.System.out;
 import static org.apache.poi.ss.usermodel.CellType.*;
@@ -25,9 +29,39 @@ import static org.apache.poi.ss.usermodel.CellType.*;
 @Service
 public class ExcelService {
 
+    private static final Logger logger = LoggerFactory.getLogger(ExcelService.class);
+    private final String rootDir = "D:/REDPLM/REDPLM";
+
     @Autowired
     private SWAssemblyRepository swAssemblyRepository;
 
+    // Инициализация структуры директорий
+    public void initializeDirectoryStructure() {
+        try {
+            FileStructureUtil.createDirectoryStructure(rootDir);
+            logger.info("Directory structure initialized successfully");
+        } catch (Exception e) {
+            logger.error("Error creating directory structure", e); // Используем logger.error для ошибок
+            throw new RuntimeException("Error creating directory structure", e); // Передаем исключение, чтобы сохранить информацию о его причине
+        }
+    }
+
+    // Создание папки для ПАК
+    public void createPakFolder(String pakName, String basePath) {
+        // Логика создания папки для ПАК
+    }
+
+    // Обновление Excel файла
+    public void updateExcelSummary(String pakName, String basePath, List<SWPart> swPartList, List<SWAssembly> swAssemblyList) {
+        // Логика обновления Excel файла
+    }
+
+    // Замена детали
+    public void replaceDetail(String pakName, String basePath, String detailName, String newDetailPath) {
+        // Логика замены детали
+    }
+
+    // Создание Excel файла
     public void createSampleExcelFile(String filePath) throws IOException {
         Workbook workbook = new XSSFWorkbook();
         Sheet sheet = workbook.createSheet("Sample Sheet");
@@ -49,40 +83,10 @@ public class ExcelService {
         workbook.close();
     }
 
-    public static String getCellText (Cell cell){
-
-        String result = "";
-
-        // Alternatively, get the value and format it yourself
-        switch (cell.getCellType()) {
-            case STRING:
-                result = (cell.getRichStringCellValue().getString());
-                break;
-            case NUMERIC:
-                if (DateUtil.isCellDateFormatted(cell)) {
-                    result = String.valueOf((cell.getDateCellValue()));
-                } else {
-                    result = String.valueOf((cell.getNumericCellValue()));
-                }
-                break;
-            case BOOLEAN:
-                result = String.valueOf((cell.getBooleanCellValue()));
-                break;
-            case FORMULA:
-                result = (cell.getCellFormula()).toString();
-                break;
-            case BLANK:
-                System.out.println();
-                break;
-            default:
-                break;
-        }
-        return result;
-    }
-
+    // Чтение Excel файла
     public List<SWAssembly> readExcelFile(String file) throws IOException {
         List<SWAssembly> assemblyList = new ArrayList<>();
-        Workbook workbook = new XSSFWorkbook(Arrays.toString(file.getBytes()));
+        Workbook workbook = new XSSFWorkbook(file);
         Sheet sheet = workbook.getSheetAt(0);
 
         for (Row row : sheet) {
@@ -92,7 +96,6 @@ public class ExcelService {
             assembly.setQuantityInStock((int) row.getCell(2).getNumericCellValue());
             assembly.setDecimalNumber(row.getCell(3).getStringCellValue());
 
-            // Placeholder methods to get related entities
             assembly.setComponents(getComponentsFromRow(row));
             assembly.setAssemblies(getAssembliesFromRow(row));
             assembly.setPurchasedParts(getPurchasedPartsFromRow(row));
@@ -111,6 +114,7 @@ public class ExcelService {
         return assemblyList;
     }
 
+    // Утилитарные методы для работы с компонентами
     private List<SWPart> getComponentsFromRow(Row row) {
         return new ArrayList<>();
     }
@@ -131,4 +135,29 @@ public class ExcelService {
         return new SWDrawing();
     }
 
+    // Логика для получения текста ячейки
+    public static String getCellText(Cell cell) {
+        String result = "";
+        switch (cell.getCellType()) {
+            case STRING:
+                result = cell.getStringCellValue();
+                break;
+            case NUMERIC:
+                if (DateUtil.isCellDateFormatted(cell)) {
+                    result = String.valueOf(cell.getDateCellValue());
+                } else {
+                    result = String.valueOf(cell.getNumericCellValue());
+                }
+                break;
+            case BOOLEAN:
+                result = String.valueOf(cell.getBooleanCellValue());
+                break;
+            case FORMULA:
+                result = cell.getCellFormula();
+                break;
+            default:
+                break;
+        }
+        return result;
+    }
 }

@@ -3,108 +3,141 @@ package com.pak.redplm.service;
 import com.pak.redplm.entity.PurchasedProduct;
 import com.pak.redplm.entity.SWAssembly;
 import com.pak.redplm.entity.SWPart;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.jdbc.core.BatchPreparedStatementSetter;
+import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.stereotype.Service;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 
+
+
+@Service
 public class AssemblyService {
-    private static final String URL = "jdbc:mysql://localhost:3306/your_database";
-    private static final String USER = "your_username";
-    private static final String PASSWORD = "your_password";
 
-    public void saveAssemblies(List<SWAssembly> assemblyList) throws SQLException {
-        try (Connection connection = DriverManager.getConnection(URL, USER, PASSWORD)) {
-            String query = "INSERT INTO Assembly (name, level, quantity_in_stock, decimal_number, estimated_time, specification, status) VALUES (?, ?, ?, ?, ?, ?, ?)";
-            try (PreparedStatement preparedStatement = connection.prepareStatement(query)) {
-                for (SWAssembly assembly : assemblyList) {
-                    preparedStatement.setString(1, assembly.getName());
-                    preparedStatement.setInt(2, assembly.getLevel());
-                    preparedStatement.setInt(3, assembly.getQuantityInStock());
-                    preparedStatement.setString(4, assembly.getDecimalNumber());
-                    preparedStatement.setString(5, assembly.getEstimatedTime().toString());
-                    preparedStatement.setString(6, assembly.getSpecification());
-                    preparedStatement.setString(7, assembly.getStatus().name());
-                    preparedStatement.addBatch();
-                }
-                preparedStatement.executeBatch();
-            }
+    private final JdbcTemplate jdbcTemplate;
 
-            // Сохранение связей
-            saveComponents(connection, assemblyList);
-            saveAssemblies(connection, assemblyList);
-            savePurchasedParts(connection, assemblyList);
-            saveInstructions(connection, assemblyList);
-            saveDrawings(connection, assemblyList);
-        }
+    @Autowired
+    public AssemblyService(JdbcTemplate jdbcTemplate) {
+        this.jdbcTemplate = jdbcTemplate;
     }
 
-    private void saveComponents(Connection connection, List<SWAssembly> assemblyList) throws SQLException {
+    public void saveAssemblies(List<SWAssembly> assemblyList) {
+        String query = "INSERT INTO Assembly (name, level, quantity_in_stock, decimal_number, estimated_time, specification, status) VALUES (?, ?, ?, ?, ?, ?, ?)";
+
+        jdbcTemplate.batchUpdate(query, new BatchPreparedStatementSetter() {
+            @Override
+            public void setValues(PreparedStatement ps, int i) throws SQLException {
+                SWAssembly assembly = assemblyList.get(i); // Инициализация переменной здесь
+                ps.setString(1, assembly.getName());
+                ps.setInt(2, assembly.getLevel());
+                ps.setInt(3, assembly.getQuantityInStock());
+                ps.setString(4, assembly.getDecimalNumber());
+                ps.setString(5, assembly.getEstimatedTime().toString());
+                ps.setString(6, assembly.getSpecification());
+                ps.setString(7, assembly.getStatus().name());
+            }
+
+            @Override
+            public int getBatchSize() {
+                return assemblyList.size();
+            }
+        });
+
+        // Сохранение связей
+        saveComponents(assemblyList);
+        savePurchasedParts(assemblyList);
+        saveInstructions(assemblyList);
+        saveDrawings(assemblyList);
+    }
+
+    private void saveComponents(List<SWAssembly> assemblyList) {
         String query = "INSERT INTO assembly_components (assembly_id, part_id) VALUES (?, ?)";
-        try (PreparedStatement preparedStatement = connection.prepareStatement(query)) {
-            for (SWAssembly assembly : assemblyList) {
-                for (SWPart part : assembly.getComponents()) {
-                    preparedStatement.setLong(1, assembly.getId());
-                    preparedStatement.setLong(2, part.getId());
-                    preparedStatement.addBatch();
-                }
+
+        jdbcTemplate.batchUpdate(query, new BatchPreparedStatementSetter() {
+            @Override
+            public void setValues(PreparedStatement ps, int i) throws SQLException {
+                SWAssembly assembly = new SWAssembly(); // Calculate assembly index
+                assembly = assemblyList.get(i / assembly.getComponents().size());
+                SWPart part = assembly.getComponents().get(i % assembly.getComponents().size()); // Calculate part index
+                ps.setLong(1, assembly.getId());
+                ps.setLong(2, part.getId());
             }
-            preparedStatement.executeBatch();
-        }
+
+            @Override
+            public int getBatchSize() {
+                return assemblyList.stream().mapToInt(assembly -> assembly.getComponents().size()).sum();
+            }
+        });
     }
 
-    private void saveAssemblies(Connection connection, List<SWAssembly> assemblyList) throws SQLException {
-        String query = "INSERT INTO assembly_subassemblies (assembly_id, subassembly_id) VALUES (?, ?)";
-        try (PreparedStatement preparedStatement = connection.prepareStatement(query)) {
-            for (SWAssembly assembly : assemblyList) {
-                for (SWAssembly subassembly : assembly.getAssemblies()) {
-                    preparedStatement.setLong(1, assembly.getId());
-                    preparedStatement.setLong(2, subassembly.getId());
-                    preparedStatement.addBatch();
-                }
-            }
-            preparedStatement.executeBatch();
-        }
-    }
-
-    private void savePurchasedParts(Connection connection, List<SWAssembly> assemblyList) throws SQLException {
+    private void savePurchasedParts(List<SWAssembly> assemblyList) {
         String query = "INSERT INTO assembly_purchased_components (assembly_id, purchased_id) VALUES (?, ?)";
-        try (PreparedStatement preparedStatement = connection.prepareStatement(query)) {
-            for (SWAssembly assembly : assemblyList) {
-                for (PurchasedProduct purchasedProduct : assembly.getPurchasedParts()) {
-                    preparedStatement.setLong(1, assembly.getId());
-                    preparedStatement.setLong(2, purchasedProduct.getId());
-                    preparedStatement.addBatch();
+
+        // Создаем список аргументов для пакетного обновления
+        List<Object[]> batchArgs = new ArrayList<>();
+
+        for (SWAssembly assembly : assemblyList) {
+            List<PurchasedProduct> purchasedParts = assembly.getPurchasedParts();
+            // Проверяем, что список purchasedParts не null и не пустой
+            if (purchasedParts != null && !purchasedParts.isEmpty()) {
+                for (PurchasedProduct purchasedProduct : purchasedParts) {
+                    // Добавляем аргументы для текущей пары assembly_id и purchased_id
+                    batchArgs.add(new Object[]{assembly.getId(), purchasedProduct.getId()});
                 }
             }
-            preparedStatement.executeBatch();
         }
+
+        // Выполняем пакетное обновление
+        jdbcTemplate.batchUpdate(query, batchArgs);
     }
 
-    private void saveInstructions(Connection connection, List<SWAssembly> assemblyList) throws SQLException {
+    private void saveInstructions(List<SWAssembly> assemblyList) {
         String query = "UPDATE Assembly SET instruction_id = ? WHERE id = ?";
-        try (PreparedStatement preparedStatement = connection.prepareStatement(query)) {
-            for (SWAssembly assembly : assemblyList) {
-                preparedStatement.setLong(1, assembly.getInstruction().getId());
-                preparedStatement.setLong(2, assembly.getId());
-                preparedStatement.addBatch();
+
+        jdbcTemplate.batchUpdate(query, new BatchPreparedStatementSetter() {
+            @Override
+            public void setValues(PreparedStatement ps, int i) throws SQLException {
+                SWAssembly assembly = assemblyList.get(i);
+                ps.setLong(1, assembly.getInstruction().getId());
+                ps.setLong(2, assembly.getId());
             }
-            preparedStatement.executeBatch();
-        }
+
+            @Override
+            public int getBatchSize() {
+                return assemblyList.size();
+            }
+        });
     }
 
-    private void saveDrawings(Connection connection, List<SWAssembly> assemblyList) throws SQLException {
+    private void saveDrawings(List<SWAssembly> assemblyList) {
         String query = "UPDATE Assembly SET drawing_id = ? WHERE id = ?";
-        try (PreparedStatement preparedStatement = connection.prepareStatement(query)) {
-            for (SWAssembly assembly : assemblyList) {
-                preparedStatement.setLong(1, assembly.getSwDrawing().getId());
-                preparedStatement.setLong(2, assembly.getId());
-                preparedStatement.addBatch();
+
+        jdbcTemplate.batchUpdate(query, new BatchPreparedStatementSetter() {
+            @Override
+            public void setValues(PreparedStatement ps, int i) throws SQLException {
+                SWAssembly assembly = assemblyList.get(i);
+                ps.setLong(1, assembly.getSwDrawing().getId());
+                ps.setLong(2, assembly.getId());
             }
-            preparedStatement.executeBatch();
-        }
+
+            @Override
+            public int getBatchSize() {
+                return assemblyList.size();
+            }
+        });
     }
 }
+
+
+
+
+
+
 

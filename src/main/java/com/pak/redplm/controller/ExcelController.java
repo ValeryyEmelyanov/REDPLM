@@ -2,7 +2,7 @@ package com.pak.redplm.controller;
 
 import com.pak.redplm.entity.SWAssembly;
 import com.pak.redplm.entity.SWPart;
-import com.pak.redplm.service.FileService;
+import com.pak.redplm.service.ExcelService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -10,11 +10,11 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/directory")
-public class FileController {
+public class ExcelController {
 
 
     @Autowired
-    private FileService fileService;
+    private ExcelService fileService;
 
     @GetMapping("/initialize")
     public String initializeDirectories() {
